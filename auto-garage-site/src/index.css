@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: #020617;
+  color: #020617;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #854d0e; /* amber-800-ish */
+  font-weight: 500;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #713f12; /* darker amber */
+}
