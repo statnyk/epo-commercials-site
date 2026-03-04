@@ -1,17 +1,19 @@
 import { useState, useRef, useEffect } from "react";
 import { loadParts, saveParts, PARTS_STORAGE_KEY } from "./cms/epoData";
 import type { Part } from "./cms/epoData";
+import { T } from "./theme";
+import logoInverse from "./assets/logo/epo_2.svg";
 
 const C = {
-  bg: "#0d1117",
-  card: "#161b27",
-  cardBorder: "rgba(255,255,255,0.07)",
-  orange: "#f97316",
-  text: "#f1f5f9",
-  muted: "#64748b",
-  mutedLight: "#94a3b8",
-  red: "#ef4444",
-  green: "#22c55e",
+  bg:        T.bg,
+  card:      T.bgWhite,
+  cardBorder:T.border,
+  primary:   T.primary,
+  text:      T.textMain,
+  muted:     T.textMuted,
+  mutedLight:T.textSub,
+  red:       "#ef4444",
+  green:     "#16a34a",
 };
 
 const ADMIN_PASSWORD = "epo2024";
@@ -27,7 +29,7 @@ function Input({ value, onChange, placeholder, type = "text" }: { value: string;
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      style={{ width: "100%", boxSizing: "border-box", background: "#0d1117", border: `1px solid rgba(255,255,255,0.1)`, borderRadius: "8px", padding: "10px 12px", color: C.text, fontSize: "14px", outline: "none" }}
+      style={{ width: "100%", boxSizing: "border-box", background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: "8px", padding: "10px 12px", color: C.text, fontSize: "14px", outline: "none" }}
     />
   );
 }
@@ -117,15 +119,15 @@ export default function AdminPanel() {
 
   /* ── Login screen ─────────────────────────────────────────────── */
   if (!authed) {
-    return (
-      <div style={{ minHeight: "100vh", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "system-ui, -apple-system, sans-serif" }}>
-        <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "16px", padding: "40px 36px", width: "100%", maxWidth: "380px" }}>
-          <div style={{ textAlign: "center", marginBottom: "32px" }}>
-            <div style={{ width: "48px", height: "48px", borderRadius: "12px", background: `linear-gradient(135deg, ${C.orange} 0%, #ea6000 100%)`, display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: "14px" }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-            </div>
-            <h1 style={{ color: C.text, fontWeight: 800, fontSize: "20px", margin: 0 }}>EPO Admin Panel</h1>
-            <p style={{ color: C.muted, fontSize: "13px", marginTop: "4px" }}>Parts management</p>
+  return (
+    <div style={{ minHeight: "100vh", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: T.fontFamily }}>
+      <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "16px", padding: "40px 36px", width: "100%", maxWidth: "380px", boxShadow: T.shadowMd }}>
+        <div style={{ textAlign: "center", marginBottom: "32px" }}>
+          <div style={{ width: "48px", height: "48px", borderRadius: "12px", background: T.primary, display: "inline-flex", alignItems: "center", justifyContent: "center", marginBottom: "14px", padding: "6px" }}>
+            <img src={logoInverse} alt="EPO Commercials logo" style={{ height: "100%", width: "auto", display: "block" }} />
+          </div>
+          <h1 style={{ color: T.primaryDark, fontWeight: 800, fontSize: "20px", margin: 0 }}>EPO Admin Panel</h1>
+          <p style={{ color: C.muted, fontSize: "13px", marginTop: "4px" }}>Parts management</p>
           </div>
 
           <div style={{ marginBottom: "16px" }}>
@@ -136,12 +138,12 @@ export default function AdminPanel() {
               onChange={(e) => { setPw(e.target.value); setPwErr(false); }}
               onKeyDown={(e) => { if (e.key === "Enter") handleLogin(); }}
               placeholder="Enter admin password"
-              style={{ width: "100%", boxSizing: "border-box", background: "#0d1117", border: `1px solid ${pwErr ? C.red : "rgba(255,255,255,0.1)"}`, borderRadius: "8px", padding: "11px 12px", color: C.text, fontSize: "14px", outline: "none" }}
+              style={{ width: "100%", boxSizing: "border-box", background: T.bg, border: `1.5px solid ${pwErr ? C.red : T.border}`, borderRadius: "8px", padding: "11px 12px", color: C.text, fontSize: "14px", outline: "none" }}
             />
             {pwErr && <p style={{ color: C.red, fontSize: "12px", marginTop: "5px" }}>Incorrect password.</p>}
           </div>
 
-          <button onClick={handleLogin} style={{ width: "100%", background: `linear-gradient(135deg, ${C.orange} 0%, #ea6000 100%)`, color: "#fff", fontWeight: 700, fontSize: "14px", padding: "12px", borderRadius: "8px", border: "none", cursor: "pointer", boxShadow: "0 4px 16px rgba(249,115,22,0.3)" }}>
+          <button onClick={handleLogin} style={{ width: "100%", background: T.primary, color: "#fff", fontWeight: 700, fontSize: "14px", padding: "12px", borderRadius: "8px", border: "none", cursor: "pointer", boxShadow: T.shadowMd }}>
             Sign in
           </button>
 
@@ -155,22 +157,22 @@ export default function AdminPanel() {
 
   /* ── Admin dashboard ──────────────────────────────────────────── */
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "system-ui, -apple-system, sans-serif" }}>
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: T.fontFamily }}>
       {/* Top bar */}
-      <header style={{ background: "rgba(13,17,23,0.97)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "0 24px", height: "58px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <header style={{ background: T.primaryDark, borderBottom: `1px solid rgba(255,255,255,0.08)`, padding: "0 24px", height: "58px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <span style={{ background: `linear-gradient(135deg, ${C.orange} 0%, #ea6000 100%)`, borderRadius: "6px", width: "28px", height: "28px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <span style={{ background: T.primary, borderRadius: "6px", width: "28px", height: "28px", display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "4px" }}>
+            <img src={logoInverse} alt="EPO Commercials logo" style={{ height: "100%", width: "auto", display: "block" }} />
           </span>
-          <span style={{ color: C.text, fontWeight: 700, fontSize: "14px" }}>EPO Admin · Parts</span>
+          <span style={{ color: "#fff", fontWeight: 700, fontSize: "14px" }}>EPO Admin · Parts</span>
         </div>
-        <a href="#" onClick={(e) => { e.preventDefault(); window.location.hash = ""; }} style={{ color: C.muted, fontSize: "13px", textDecoration: "none" }}>← View site</a>
+        <a href="#" onClick={(e) => { e.preventDefault(); window.location.hash = ""; }} style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", textDecoration: "none" }}>← View site</a>
       </header>
 
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "32px 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "28px", alignItems: "start" }}>
         {/* Add part form */}
         <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "14px", padding: "28px" }}>
-          <h2 style={{ color: C.text, fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>Add New Part</h2>
+          <h2 style={{ color: T.primaryDark, fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>Add New Part</h2>
 
           <div style={{ marginBottom: "14px" }}>
             <Label>Part name *</Label>
@@ -204,7 +206,7 @@ export default function AdminPanel() {
             </div>
           )}
 
-          <button onClick={addPart} disabled={!name.trim() || saving} style={{ width: "100%", background: name.trim() ? `linear-gradient(135deg, ${C.orange} 0%, #ea6000 100%)` : "#1e293b", color: name.trim() ? "#fff" : C.muted, fontWeight: 700, fontSize: "14px", padding: "12px", borderRadius: "8px", border: "none", cursor: name.trim() ? "pointer" : "not-allowed", transition: "opacity 0.15s" }}>
+          <button onClick={addPart} disabled={!name.trim() || saving} style={{ width: "100%", background: name.trim() ? T.primary : T.border, color: name.trim() ? "#fff" : C.muted, fontWeight: 700, fontSize: "14px", padding: "12px", borderRadius: "8px", border: "none", cursor: name.trim() ? "pointer" : "not-allowed", transition: "all 0.15s" }}>
             {saving ? "Adding..." : "Add Part"}
           </button>
         </div>
@@ -212,7 +214,7 @@ export default function AdminPanel() {
         {/* Parts list */}
         <div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
-            <h2 style={{ color: C.text, fontWeight: 700, fontSize: "16px", margin: 0 }}>
+            <h2 style={{ color: T.primaryDark, fontWeight: 700, fontSize: "16px", margin: 0 }}>
               Listed Parts <span style={{ color: C.muted, fontSize: "14px", fontWeight: 400 }}>({parts.length})</span>
             </h2>
             {parts.length > 0 && (
@@ -230,16 +232,16 @@ export default function AdminPanel() {
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {parts.map((p) => (
                 <div key={p.id} style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "12px", padding: "14px 16px", display: "flex", alignItems: "center", gap: "14px" }}>
-                  <div style={{ width: "52px", height: "52px", borderRadius: "8px", background: "#1c2333", flexShrink: 0, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ width: "52px", height: "52px", borderRadius: "8px", background: T.bg, flexShrink: 0, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     {p.imageUrl ? (
                       <img src={p.imageUrl} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     ) : (
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="m16.5 9.4-9-5.19"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={T.border} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="m16.5 9.4-9-5.19"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
                     )}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <p style={{ color: C.text, fontWeight: 600, fontSize: "14px", margin: "0 0 2px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.name}</p>
-                    <p style={{ color: p.price != null ? C.orange : C.muted, fontSize: "13px", fontWeight: p.price != null ? 700 : 400, margin: 0 }}>
+                    <p style={{ color: p.price != null ? T.primary : C.muted, fontSize: "13px", fontWeight: p.price != null ? 700 : 400, margin: 0 }}>
                       {p.price != null ? `€${p.price}` : "Price on request"}
                     </p>
                   </div>

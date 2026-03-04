@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { epoSettings, services, workingHours, loadParts } from "./cms/epoData";
 import type { Part } from "./cms/epoData";
+import { T, container } from "./theme";
 import AdminPanel from "./AdminPanel";
+
+import heroImg  from "./assets/images/2026-03-02 08.43.04.jpg";
+import shopImg  from "./assets/images/2026-03-02 08.43.36.jpg";
+import mechImg  from "./assets/images/2026-03-02 08.43.52.jpg";
+import logoMain from "./assets/logo/epo_1.svg";
+import logoInverse from "./assets/logo/epo_2.svg";
 
 /* ─── Breakpoint hook ────────────────────────────────────────────── */
 function useIsDesktop(bp = 768) {
@@ -16,82 +23,123 @@ function useIsDesktop(bp = 768) {
   return ok;
 }
 
-/* ─── Design tokens ──────────────────────────────────────────────── */
-const C = {
-  bg: "#0d1117",
-  card: "#161b27",
-  cardBorder: "rgba(255,255,255,0.07)",
-  orange: "#f97316",
-  orangeDark: "#ea6000",
-  blue: "#3b82f6",
-  text: "#f1f5f9",
-  muted: "#64748b",
-  mutedLight: "#94a3b8",
-} as const;
+/* ─── Button helpers ─────────────────────────────────────────────── */
+function BtnPrimary({ href, children, size = "md" }: { href: string; children: React.ReactNode; size?: "sm" | "md" | "lg" }) {
+  const pad = size === "lg" ? "15px 32px" : size === "sm" ? "8px 18px" : "11px 24px";
+  const fs  = size === "lg" ? "16px" : size === "sm" ? "13px" : "14px";
+  const [hov, setHov] = useState(false);
+  return (
+    <a href={href} style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: hov ? T.primaryDark : T.primary, color: "#fff", fontWeight: 700, fontSize: fs, padding: pad, borderRadius: T.radius, textDecoration: "none", transition: "background 0.18s", boxShadow: T.shadowMd }} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
+      {children}
+    </a>
+  );
+}
 
-const container: React.CSSProperties = {
-  maxWidth: "1152px",
-  margin: "0 auto",
-  paddingLeft: "24px",
-  paddingRight: "24px",
+function BtnOutline({ href, children }: { href: string; children: React.ReactNode }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <a href={href} style={{ display: "inline-flex", alignItems: "center", gap: "8px", border: `2px solid ${T.primary}`, color: hov ? "#fff" : T.primary, background: hov ? T.primary : "transparent", fontWeight: 700, fontSize: "14px", padding: "11px 24px", borderRadius: T.radius, textDecoration: "none", transition: "all 0.18s" }} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
+      {children}
+    </a>
+  );
+}
+
+/* ─── Icons ──────────────────────────────────────────────────────── */
+const IcoPhone = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.53 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.46 16l.46.92z"/></svg>;
+const IcoMenu = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>;
+const IcoX    = () => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
+const IcoCheck = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>;
+
+const IcoMapPin = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>;
+const IcoMail  = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
+const IcoClock = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
+const IcoTruck = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>;
+const IcoClip  = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>;
+const IcoCpu   = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>;
+const IcoZap   = () => <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
+const IcoPkg   = () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m16.5 9.4-9-5.19"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>;
+
+const svcIconMap: Record<string, () => React.ReactElement> = {
+  breakdown: IcoTruck, cvrt: IcoClip, diagnostics: IcoCpu, electrical: IcoZap, bus: IcoTruck, truck: IcoTruck,
+};
+const svcColorMap: Record<string, string> = {
+  breakdown: T.primary, cvrt: "#0ea5e9", diagnostics: "#6366f1", electrical: "#f97316", bus: "#10b981", truck: "#f59e0b",
 };
 
-/* ─── SVG Icons ──────────────────────────────────────────────────── */
-function IcoPhone() {
-  return <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.53 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.46 16l.46.92z"/></svg>;
-}
-function IcoMenu() {
-  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>;
-}
-function IcoX() {
-  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
-}
-function IcoTruck() {
-  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>;
-}
-function IcoClipboard() {
-  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="12" y2="16"/></svg>;
-}
-function IcoCpu() {
-  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>;
-}
-function IcoDroplet() {
-  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>;
-}
-function IcoZap() {
-  return <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>;
-}
-function IcoClock() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
-}
-function IcoMapPin() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>;
-}
-function IcoMail() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>;
-}
-function IcoPackage() {
-  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="m16.5 9.4-9-5.19"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>;
-}
-function IcoArrow() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
+/* ─── Service Card ───────────────────────────────────────────────── */
+function ServiceCard({ s }: { s: typeof services[number] }) {
+  const [hov, setHov] = useState(false);
+  const Icon = svcIconMap[s.icon] ?? IcoTruck;
+  const color = svcColorMap[s.icon] ?? T.primary;
+  return (
+    <article onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ background: T.bgWhite, border: hov ? `1.5px solid ${T.primary}` : `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px 24px", display: "flex", flexDirection: "column", gap: "14px", boxShadow: hov ? T.shadowHover : T.shadow, transition: "all 0.2s", cursor: "default" }}>
+      <div style={{ width: "52px", height: "52px", borderRadius: T.radius, background: hov ? T.primaryLight : T.bg, display: "flex", alignItems: "center", justifyContent: "center", color: hov ? T.primary : color, transition: "all 0.2s" }}>
+        <Icon />
+      </div>
+      <div>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", flexWrap: "wrap" }}>
+          <h3 style={{ color: T.textMain, fontWeight: 700, fontSize: "15px", margin: 0 }}>{s.title}</h3>
+          {s.highlight && (
+            <span style={{ background: T.primary, color: "#fff", fontSize: "10px", fontWeight: 700, padding: "2px 8px", borderRadius: "100px" }}>24/7</span>
+          )}
+        </div>
+        {s.bullets && s.bullets.length > 0 ? (
+          <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "6px" }}>
+            {s.bullets.map((b) => (
+              <li key={b} style={{ display: "flex", alignItems: "flex-start", gap: "7px" }}>
+                <span style={{ flexShrink: 0, marginTop: "3px", width: "16px", height: "16px", borderRadius: "50%", background: hov ? T.primary : color, display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#fff", transition: "background 0.2s" }}>
+                  <IcoCheck />
+                </span>
+                <span style={{ color: T.textSub, fontSize: "13px", lineHeight: 1.55 }}>{b}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p style={{ color: T.textSub, fontSize: "13px", lineHeight: 1.65, margin: 0 }}>{s.description}</p>
+        )}
+      </div>
+    </article>
+  );
 }
 
-const serviceIconMap = {
-  breakdown: IcoTruck,
-  cvrt: IcoClipboard,
-  diagnostics: IcoCpu,
-  hydraulic: IcoDroplet,
-  electrical: IcoZap,
-};
+/* ─── Part Card ──────────────────────────────────────────────────── */
+function PartCard({ p }: { p: Part }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <article onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ background: T.bgWhite, border: `1.5px solid ${hov ? T.primary : T.border}`, borderRadius: T.radiusMd, overflow: "hidden", display: "flex", flexDirection: "column", boxShadow: hov ? T.shadowHover : T.shadow, transition: "all 0.2s" }}>
+      <div style={{ height: "160px", background: T.bg, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "8px", overflow: "hidden" }}>
+        {p.imageUrl ? (
+          <img src={p.imageUrl} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        ) : (
+          <>
+            <IcoPkg />
+            <span style={{ color: T.textMuted, fontSize: "11px" }}>No photo available</span>
+          </>
+        )}
+      </div>
+      <div style={{ padding: "16px", flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
+        <h3 style={{ color: T.textMain, fontWeight: 700, fontSize: "14px", lineHeight: 1.3, margin: 0 }}>{p.name}</h3>
+        <div>
+          {p.price != null ? (
+            <span style={{ color: T.primary, fontWeight: 800, fontSize: "20px" }}>€{p.price}</span>
+          ) : (
+            <span style={{ color: T.textMuted, fontSize: "13px" }}>Price on request</span>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
 
-const serviceColorMap: Record<string, string> = {
-  breakdown: C.orange,
-  cvrt: C.blue,
-  diagnostics: "#a78bfa",
-  hydraulic: "#06b6d4",
-  electrical: "#f59e0b",
-};
+/* ─── Nav Link ───────────────────────────────────────────────────── */
+function NavLink({ href, label }: { href: string; label: string }) {
+  const [hov, setHov] = useState(false);
+  return (
+    <a href={href} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ color: hov ? T.primary : T.textSub, fontWeight: 500, fontSize: "14px", textDecoration: "none", padding: "6px 12px", borderRadius: "6px", background: hov ? T.primaryLight : "transparent", transition: "all 0.15s" }}>
+      {label}
+    </a>
+  );
+}
 
 /* ─── Header ─────────────────────────────────────────────────────── */
 function Header() {
@@ -99,61 +147,71 @@ function Header() {
   const isDesktop = useIsDesktop();
   useEffect(() => { if (isDesktop) setOpen(false); }, [isDesktop]);
 
-  const links = [
-    { href: "#about", label: "About" },
+  const navLinks = [
+    { href: "#about",    label: "About"    },
     { href: "#services", label: "Services" },
-    { href: "#hours", label: "Hours" },
-    { href: "#parts", label: "Parts" },
-    { href: "#contact", label: "Contact" },
+    { href: "#hours",    label: "Hours"    },
+    { href: "#parts",    label: "Parts"    },
+    { href: "#contact",  label: "Contact"  },
   ];
 
   return (
-    <header style={{ position: "sticky", top: 0, zIndex: 50, background: "rgba(13,17,23,0.97)", backdropFilter: "blur(10px)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-      <div style={{ ...container, height: "64px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+    <header style={{ position: "sticky", top: 0, zIndex: 100, background: T.bgWhite, borderBottom: `1px solid ${T.border}`, boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}>
+      <div style={{ ...container, height: "68px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+
         {/* Logo */}
         <a href="#" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-          <span style={{ background: `linear-gradient(135deg, ${C.orange} 0%, ${C.orangeDark} 100%)`, borderRadius: "8px", width: "36px", height: "36px", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-          </span>
-          <div>
-            <div style={{ color: C.text, fontWeight: 800, fontSize: "16px", lineHeight: 1.1, letterSpacing: "-0.02em" }}>EPO Company</div>
-            <div style={{ color: C.muted, fontSize: "11px", lineHeight: 1.1 }}>Heavy Vehicle Specialists</div>
-          </div>
+          <img
+            src={logoMain}
+            alt="EPO Commercials logo"
+            style={{ height: "34px", width: "auto", display: "block" }}
+          />
         </a>
 
         {/* Desktop nav */}
         {isDesktop && (
-          <nav style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-            {links.map((l) => (
-              <a key={l.href} href={l.href} style={{ color: C.mutedLight, fontSize: "14px", fontWeight: 500, textDecoration: "none", transition: "color 0.15s" }} onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = C.text)} onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = C.mutedLight)}>
-                {l.label}
+          <nav style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            {navLinks.map((l) => <NavLink key={l.href} href={l.href} label={l.label} />)}
+            <div style={{ marginLeft: "12px", display: "flex", gap: "8px", alignItems: "center", paddingLeft: "16px", borderLeft: `1px solid ${T.border}` }}>
+              <a href={`tel:${epoSettings.phone}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: T.primary, fontWeight: 700, fontSize: "13px", textDecoration: "none" }}>
+                <IcoPhone />{epoSettings.phone}
               </a>
-            ))}
-            <a href={`tel:${epoSettings.phone}`} style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: `linear-gradient(135deg, ${C.orange} 0%, ${C.orangeDark} 100%)`, color: "#fff", fontWeight: 700, fontSize: "13px", padding: "9px 18px", borderRadius: "8px", textDecoration: "none", boxShadow: `0 2px 12px rgba(249,115,22,0.35)` }}>
-              <IcoPhone />
-              {epoSettings.phone}
-            </a>
+              <BtnPrimary href={`tel:${epoSettings.phone}`} size="sm">Call Now</BtnPrimary>
+            </div>
           </nav>
         )}
 
         {/* Mobile hamburger */}
         {!isDesktop && (
-          <button onClick={() => setOpen((v) => !v)} style={{ background: "none", border: "none", cursor: "pointer", color: C.mutedLight, padding: "4px", display: "flex" }}>
-            {open ? <IcoX /> : <IcoMenu />}
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <a href={`tel:${epoSettings.phone}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: T.primary, fontWeight: 700, fontSize: "13px", textDecoration: "none" }}>
+              <IcoPhone />
+            </a>
+            <button onClick={() => setOpen((v) => !v)} style={{ background: "none", border: `1px solid ${T.border}`, cursor: "pointer", color: T.textSub, padding: "6px 8px", display: "flex", borderRadius: "6px" }}>
+              {open ? <IcoX /> : <IcoMenu />}
+            </button>
+          </div>
         )}
       </div>
 
+      {/* Mobile drawer */}
       {!isDesktop && open && (
-        <div style={{ background: "#111827", borderTop: "1px solid rgba(255,255,255,0.06)", padding: "12px 24px 20px" }}>
-          {links.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ display: "block", color: "#cbd5e1", fontSize: "15px", fontWeight: 500, padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.05)", textDecoration: "none" }}>
+        <div style={{ background: T.bgWhite, borderTop: `1px solid ${T.border}`, padding: "12px 24px 20px" }}>
+          {navLinks.map((l) => (
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ display: "block", color: T.textMain, fontWeight: 500, fontSize: "15px", padding: "12px 0", borderBottom: `1px solid ${T.border}`, textDecoration: "none" }}>
               {l.label}
             </a>
           ))}
-          <a href={`tel:${epoSettings.phone}`} style={{ display: "inline-flex", alignItems: "center", gap: "8px", marginTop: "16px", background: `linear-gradient(135deg, ${C.orange} 0%, ${C.orangeDark} 100%)`, color: "#fff", fontWeight: 700, fontSize: "14px", padding: "11px 22px", borderRadius: "8px", textDecoration: "none" }}>
-            <IcoPhone /> Call Now
-          </a>
+          <div style={{ marginTop: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
+            <BtnPrimary href={`tel:${epoSettings.phone}`} size="lg">
+              <IcoPhone /> {epoSettings.phone}
+            </BtnPrimary>
+            {epoSettings.phoneAlt && (
+              <BtnOutline href={`tel:${epoSettings.phoneAlt}`}>
+                <IcoPhone /> {epoSettings.phoneAlt}
+              </BtnOutline>
+            )}
+          </div>
         </div>
       )}
     </header>
@@ -163,49 +221,69 @@ function Header() {
 /* ─── Hero ───────────────────────────────────────────────────────── */
 function Hero() {
   return (
-    <section style={{ background: `linear-gradient(160deg, #060a12 0%, #0d1528 50%, #060a12 100%)`, position: "relative", overflow: "hidden" }}>
-      {/* Glow */}
-      <div style={{ position: "absolute", top: "-80px", right: "-80px", width: "500px", height: "500px", borderRadius: "50%", background: `radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%)`, pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: "-80px", left: "0", width: "400px", height: "400px", borderRadius: "50%", background: `radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%)`, pointerEvents: "none" }} />
+    <section style={{ background: T.bg, borderBottom: `1px solid ${T.border}` }}>
+      <div style={{ ...container, paddingTop: "72px", paddingBottom: "72px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "56px", alignItems: "center" }}>
 
-      <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px", position: "relative", zIndex: 1 }}>
-        {/* 24/7 badge */}
-        <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(249,115,22,0.12)", border: `1px solid rgba(249,115,22,0.3)`, borderRadius: "100px", padding: "6px 14px", marginBottom: "28px" }}>
-          <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: C.orange, display: "inline-block", boxShadow: `0 0 8px ${C.orange}` }} />
-          <span style={{ color: C.orange, fontSize: "13px", fontWeight: 700 }}>24/7 Breakdown Assistance Available</span>
+        {/* Left: copy */}
+        <div>
+          {/* 24/7 badge */}
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: T.primaryLight, border: `1px solid ${T.borderBlue}`, borderRadius: "100px", padding: "5px 14px", marginBottom: "24px" }}>
+            <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: T.accent, display: "inline-block" }} />
+            <span style={{ color: T.primary, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>24/7 Breakdown Assistance · Dublin, Ireland</span>
+          </div>
+
+          <h1 style={{ color: T.primaryDark, fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.02em", maxWidth: "580px", marginBottom: "20px" }}>
+            Bus &amp; Heavy-Duty Vehicle<br />
+            <span style={{ color: T.primary }}>Repair Specialists</span>
+          </h1>
+
+          <p style={{ color: T.textSub, fontSize: "clamp(15px, 1.8vw, 17px)", lineHeight: 1.8, maxWidth: "520px", marginBottom: "16px" }}>
+            Specialist repair and maintenance for <strong style={{ color: T.textMain }}>Buses, Trucks and Heavy-Duty Vehicles</strong>. Qualified technicians — available around the clock for emergency breakdowns.
+          </p>
+
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "36px" }}>
+            {["Bus Specialists", "CVRT Pre-Test", "Computer Diagnostics", "Electrical Repair", "All Makes Covered"].map((tag) => (
+              <span key={tag} style={{ background: T.bgWhite, border: `1px solid ${T.borderBlue}`, color: T.primary, fontSize: "12px", fontWeight: 600, padding: "4px 12px", borderRadius: "100px" }}>{tag}</span>
+            ))}
+          </div>
+
+          {/* CTAs */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "20px" }}>
+            <BtnPrimary href={`tel:${epoSettings.phone}`} size="lg">
+              <IcoPhone /> {epoSettings.phone}
+            </BtnPrimary>
+            {epoSettings.phoneAlt && (
+              <BtnOutline href={`tel:${epoSettings.phoneAlt}`}>
+                <IcoPhone /> {epoSettings.phoneAlt}
+              </BtnOutline>
+            )}
+          </div>
+          <p style={{ color: T.textMuted, fontSize: "12px" }}>No online booking — please call for all appointments &amp; breakdowns</p>
         </div>
 
-        <h1 style={{ color: C.text, fontSize: "clamp(2rem, 5vw, 3.5rem)", fontWeight: 900, lineHeight: 1.08, letterSpacing: "-0.03em", maxWidth: "700px", marginBottom: "20px" }}>
-          Heavy Vehicle Repair<br />
-          <span style={{ color: C.orange }}>You Can Count On</span>
-        </h1>
-
-        <p style={{ color: C.mutedLight, fontSize: "clamp(15px, 2vw, 17px)", lineHeight: 1.75, maxWidth: "560px", marginBottom: "36px" }}>
-          Specialist repair and maintenance for HGVs, buses, LCVs, trailers and refuse trucks.
-          Available <strong style={{ color: C.text }}>24/7</strong> for emergency breakdown – we come to you.
-        </p>
-
-        {/* CTAs */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "12px", marginBottom: "60px" }}>
-          <a href={`tel:${epoSettings.phone}`} style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: `linear-gradient(135deg, ${C.orange} 0%, ${C.orangeDark} 100%)`, color: "#fff", fontWeight: 800, fontSize: "16px", padding: "14px 28px", borderRadius: "10px", textDecoration: "none", boxShadow: `0 4px 20px rgba(249,115,22,0.4)` }}>
-            <IcoPhone /> Call Now · {epoSettings.phone}
-          </a>
-          <a href="#services" style={{ display: "inline-flex", alignItems: "center", gap: "8px", border: "1px solid rgba(255,255,255,0.15)", color: C.text, fontWeight: 600, fontSize: "15px", padding: "14px 24px", borderRadius: "10px", textDecoration: "none" }}>
-            Our Services <IcoArrow />
-          </a>
+        {/* Right: image */}
+        <div style={{ borderRadius: T.radiusLg, overflow: "hidden", boxShadow: T.shadowMd, aspectRatio: "4/3", position: "relative" }}>
+          <img src={heroImg} alt="EPO Company service van at work" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          {/* 24/7 overlay badge */}
+          <div style={{ position: "absolute", bottom: "16px", left: "16px", background: T.primary, color: "#fff", borderRadius: T.radius, padding: "10px 16px", boxShadow: T.shadowMd }}>
+            <div style={{ fontWeight: 900, fontSize: "22px", lineHeight: 1 }}>24/7</div>
+            <div style={{ fontSize: "11px", fontWeight: 600, opacity: 0.85 }}>Breakdown response</div>
+          </div>
         </div>
+      </div>
 
-        {/* Stats */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "40px", paddingTop: "40px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+      {/* Stats bar */}
+      <div style={{ borderTop: `1px solid ${T.border}`, background: T.bgWhite }}>
+        <div style={{ ...container, paddingTop: "28px", paddingBottom: "28px", display: "flex", flexWrap: "wrap", gap: "32px", justifyContent: "space-around" }}>
           {[
-            { v: "24/7", l: "Breakdown response" },
-            { v: "HGV", l: "Trucks & buses" },
-            { v: "CVRT", l: "Pre-test specialists" },
-            { v: "All makes", l: "Brands covered" },
+            { v: "24/7",    l: "Breakdown assistance" },
+            { v: "CVRT",    l: "Pre-test specialists"  },
+            { v: "HGV",     l: "Buses & trucks"        },
+            { v: "All makes", l: "Brands covered"      },
           ].map((s) => (
-            <div key={s.l}>
-              <div style={{ color: C.orange, fontSize: "clamp(20px, 3vw, 26px)", fontWeight: 900, lineHeight: 1 }}>{s.v}</div>
-              <div style={{ color: C.muted, fontSize: "12px", marginTop: "4px" }}>{s.l}</div>
+            <div key={s.l} style={{ textAlign: "center" }}>
+              <div style={{ color: T.primary, fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 900, lineHeight: 1 }}>{s.v}</div>
+              <div style={{ color: T.textMuted, fontSize: "12px", marginTop: "4px" }}>{s.l}</div>
             </div>
           ))}
         </div>
@@ -216,39 +294,47 @@ function Hero() {
 
 /* ─── About ──────────────────────────────────────────────────────── */
 function About() {
-  const points = [
-    "Extensive experience in heavy vehicle repair",
-    "Team of qualified professional technicians",
-    "Electrical and mechanical expertise",
-    "Available for emergency breakdowns",
+  const bullets = [
+    "Experienced heavy vehicle specialists",
+    "Qualified mechanical and electrical technicians",
+    "Bus and truck expertise",
+    "CVRT pre-test specialists",
+    "Fast turnaround times",
+    "All major makes covered",
+    "Dublin-based and locally trusted",
   ];
 
   return (
-    <section id="about" style={{ background: "#0d1117", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-      <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "56px", alignItems: "center" }}>
+    <section id="about" style={{ background: T.bgWhite, borderTop: `1px solid ${T.border}`, borderBottom: `1px solid ${T.border}` }}>
+      <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "60px", alignItems: "center" }}>
         <div>
-          <p style={{ color: C.orange, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>About us</p>
-          <h2 style={{ color: C.text, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.025em", lineHeight: 1.2, marginBottom: "20px" }}>
-            About Company
-          </h2>
-          <p style={{ color: C.mutedLight, fontSize: "15px", lineHeight: 1.8, marginBottom: "24px" }}>
-            The EPO company has been operating in the heavy vehicle repair and maintenance market for a long time, with extensive experience in the field and a team of professionals. We are here to offer you quality services even in cases of breakdown.
+          <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>About Us</p>
+          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "20px" }}>About EPO Commercials</h2>
+          <p style={{ color: T.textSub, fontSize: "15px", lineHeight: 1.85, marginBottom: "28px" }}>
+            EPO Commercials is a Dublin-based mechanical service company specialising in the repair, maintenance, and diagnostics of buses, trucks, and heavy-duty vehicles. With extensive hands-on experience in the commercial transport sector, our qualified technicians deliver reliable, efficient, and professional services designed to minimise downtime and maximise fleet performance.
           </p>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", color: C.muted, fontSize: "13px" }}>
-            <IcoMapPin />
-            <span>{epoSettings.address}</span>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
+            {bullets.map((b) => (
+              <div key={b} style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
+                <span style={{ flexShrink: 0, marginTop: "3px", width: "18px", height: "18px", borderRadius: "50%", background: T.primary, display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>
+                  <IcoCheck />
+                </span>
+                <span style={{ color: T.textSub, fontSize: "13px", lineHeight: 1.45 }}>{b}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: "6px", color: T.textMuted, fontSize: "13px" }}>
+            <IcoMapPin /><span>{epoSettings.address}</span>
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-          {points.map((p) => (
-            <div key={p} style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "12px", padding: "18px", display: "flex", alignItems: "flex-start", gap: "10px" }}>
-              <span style={{ flexShrink: 0, marginTop: "2px", width: "20px", height: "20px", borderRadius: "50%", background: `linear-gradient(135deg, ${C.orange} 0%, ${C.orangeDark} 100%)`, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-              </span>
-              <span style={{ color: C.mutedLight, fontSize: "13px", fontWeight: 500, lineHeight: 1.4 }}>{p}</span>
-            </div>
-          ))}
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div style={{ borderRadius: T.radiusMd, overflow: "hidden", boxShadow: T.shadow, aspectRatio: "16/9" }}>
+            <img src={shopImg} alt="Heavy vehicle engine repair" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
+          <div style={{ borderRadius: T.radiusMd, overflow: "hidden", boxShadow: T.shadow, aspectRatio: "16/9" }}>
+            <img src={mechImg} alt="Professional mechanic at work" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
         </div>
       </div>
     </section>
@@ -258,39 +344,88 @@ function About() {
 /* ─── Services ───────────────────────────────────────────────────── */
 function Services() {
   return (
-    <section id="services" style={{ background: "#080c14" }}>
+    <section id="services" style={{ background: T.bg }}>
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px" }}>
-        <div style={{ marginBottom: "48px", display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "16px" }}>
-          <div>
-            <p style={{ color: C.orange, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>What we offer</p>
-            <h2 style={{ color: C.text, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.025em", margin: 0 }}>Our Services</h2>
-          </div>
-          <a href={`tel:${epoSettings.phone}`} style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.25)", borderRadius: "8px", padding: "9px 16px", color: C.orange, fontWeight: 600, fontSize: "13px", textDecoration: "none" }}>
-            <IcoPhone /> Book by phone
-          </a>
+        <div style={{ textAlign: "center", marginBottom: "52px" }}>
+          <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>What We Offer</p>
+          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 12px" }}>Our Services</h2>
+          <p style={{ color: T.textSub, fontSize: "15px", maxWidth: "480px", margin: "0 auto" }}>
+            Professional repair and maintenance for all heavy vehicles — call us to book an appointment.
+          </p>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "16px" }}>
-          {services.map((s) => {
-            const Icon = serviceIconMap[s.icon];
-            const color = serviceColorMap[s.icon];
-            return (
-              <article key={s.id} style={{ background: s.highlight ? `linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(234,96,0,0.06) 100%)` : C.card, border: s.highlight ? `1px solid rgba(249,115,22,0.3)` : `1px solid ${C.cardBorder}`, borderRadius: "14px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px", transition: "transform 0.2s, box-shadow 0.2s" }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(0,0,0,0.3)"; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}>
-                <div style={{ width: "48px", height: "48px", borderRadius: "12px", background: `${color}18`, display: "flex", alignItems: "center", justifyContent: "center", color }}>
-                  <Icon />
-                </div>
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", flexWrap: "wrap" }}>
-                    <h3 style={{ color: C.text, fontWeight: 700, fontSize: "15px", margin: 0 }}>{s.title}</h3>
-                    {s.highlight && (
-                      <span style={{ background: C.orange, color: "#fff", fontSize: "10px", fontWeight: 700, padding: "2px 8px", borderRadius: "100px" }}>24/7</span>
-                    )}
-                  </div>
-                  <p style={{ color: C.muted, fontSize: "13px", lineHeight: 1.65, margin: 0 }}>{s.description}</p>
-                </div>
-              </article>
-            );
-          })}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(270px, 1fr))", gap: "20px", marginBottom: "40px" }}>
+          {services.map((s) => <ServiceCard key={s.id} s={s} />)}
+        </div>
+
+        {/* CTA strip */}
+        <div style={{ background: T.primary, borderRadius: T.radiusMd, padding: "28px 32px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
+          <div>
+            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "13px", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "4px" }}>Bookings by phone only</p>
+            <p style={{ color: "#fff", fontWeight: 700, fontSize: "15px", margin: 0 }}>Call us to confirm availability, parts and timing for your vehicle.</p>
+          </div>
+          <a href={`tel:${epoSettings.phone}`} style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: "#fff", color: T.primary, fontWeight: 800, fontSize: "15px", padding: "12px 24px", borderRadius: T.radius, textDecoration: "none" }}>
+            <IcoPhone /> {epoSettings.phone}
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Why Choose ─────────────────────────────────────────────────── */
+function WhyChoose() {
+  const reasons = [
+    "Experienced heavy vehicle specialists",
+    "Qualified mechanical and electrical technicians",
+    "Bus and truck expertise",
+    "CVRT pre-test specialists",
+    "Fast turnaround times",
+    "All major makes covered",
+    "Dublin-based and locally trusted",
+  ];
+
+  return (
+    <section id="why-choose" style={{ background: T.bgWhite, borderTop: `1px solid ${T.border}`, borderBottom: `1px solid ${T.border}` }}>
+      <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px" }}>
+        <div style={{ textAlign: "center", marginBottom: "52px" }}>
+          <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>Our Strengths</p>
+          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 12px" }}>Why Choose EPO Commercials</h2>
+          <p style={{ color: T.textSub, fontSize: "15px", maxWidth: "480px", margin: "0 auto" }}>
+            We bring deep expertise and genuine dedication to every vehicle we service.
+          </p>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "16px" }}>
+          {reasons.map((r) => (
+            <div key={r} style={{ display: "flex", alignItems: "center", gap: "14px", background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radius, padding: "18px 20px" }}>
+              <span style={{ flexShrink: 0, width: "32px", height: "32px", borderRadius: "50%", background: T.primaryLight, display: "inline-flex", alignItems: "center", justifyContent: "center", color: T.primary }}>
+                <IcoCheck />
+              </span>
+              <span style={{ color: T.textMain, fontSize: "14px", fontWeight: 600, lineHeight: 1.4 }}>{r}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Our Commitment ─────────────────────────────────────────────── */
+function OurCommitment() {
+  return (
+    <section style={{ background: T.primaryDark }}>
+      <div style={{ ...container, paddingTop: "72px", paddingBottom: "72px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "48px", alignItems: "center" }}>
+        <div>
+          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>Our Promise</p>
+          <h2 style={{ color: "#fff", fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "0" }}>Our Commitment</h2>
+        </div>
+        <div>
+          <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "16px", lineHeight: 1.85, margin: "0 0 20px" }}>
+            At EPO Commercials, we are committed to delivering professional workmanship, transparent communication, reliable service, and long-term fleet support.
+          </p>
+          <p style={{ color: T.primary, fontSize: "17px", fontWeight: 700, lineHeight: 1.6, margin: 0 }}>
+            We do not just repair vehicles — we keep transport businesses moving.
+          </p>
         </div>
       </div>
     </section>
@@ -300,29 +435,25 @@ function Services() {
 /* ─── Working Hours ──────────────────────────────────────────────── */
 function WorkingHours() {
   return (
-    <section id="hours" style={{ background: "#0d1117", borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-      <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "48px", alignItems: "center" }}>
+    <section id="hours" style={{ background: T.bgWhite, borderTop: `1px solid ${T.border}`, borderBottom: `1px solid ${T.border}` }}>
+      <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "60px", alignItems: "center" }}>
         <div>
-          <p style={{ color: C.orange, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Availability</p>
-          <h2 style={{ color: C.text, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.025em", lineHeight: 1.2, marginBottom: "16px" }}>Working Hours</h2>
-          <p style={{ color: C.muted, fontSize: "14px", lineHeight: 1.7 }}>
+          <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>Availability</p>
+          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "16px" }}>Working Hours</h2>
+          <p style={{ color: T.textSub, fontSize: "15px", lineHeight: 1.8 }}>
             Regular workshop hours apply to all scheduled services.<br />
-            For breakdowns — we're available <strong style={{ color: C.orange }}>around the clock, every day</strong>.
+            For breakdowns — we're available <strong style={{ color: T.primary }}>around the clock, every day of the year</strong>.
           </p>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {workingHours.map((h) => (
-            <div key={h.label} style={{ background: h.is247 ? `linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(234,96,0,0.08) 100%)` : C.card, border: h.is247 ? "1px solid rgba(249,115,22,0.3)" : `1px solid ${C.cardBorder}`, borderRadius: "12px", padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
+            <div key={h.label} style={{ background: h.is247 ? T.primaryLight : T.bg, border: h.is247 ? `1.5px solid ${T.borderBlue}` : `1.5px solid ${T.border}`, borderRadius: T.radius, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <span style={{ color: h.is247 ? C.orange : C.muted }}>
-                  <IcoClock />
-                </span>
-                <span style={{ color: h.is247 ? C.text : C.mutedLight, fontWeight: h.is247 ? 700 : 500, fontSize: "14px" }}>{h.label}</span>
+                <span style={{ color: h.is247 ? T.primary : T.textMuted }}><IcoClock /></span>
+                <span style={{ color: h.is247 ? T.primary : T.textMain, fontWeight: h.is247 ? 700 : 500, fontSize: "14px" }}>{h.label}</span>
               </div>
-              <span style={{ color: h.is247 ? C.orange : C.text, fontWeight: 700, fontSize: h.is247 ? "16px" : "14px", whiteSpace: "nowrap" }}>
-                {h.hours}
-              </span>
+              <span style={{ color: h.is247 ? T.primary : T.textMain, fontWeight: 700, fontSize: h.is247 ? "16px" : "14px", whiteSpace: "nowrap" }}>{h.hours}</span>
             </div>
           ))}
         </div>
@@ -334,67 +465,41 @@ function WorkingHours() {
 /* ─── Parts ──────────────────────────────────────────────────────── */
 function Parts() {
   const [parts, setParts] = useState<Part[]>([]);
-
   useEffect(() => {
     setParts(loadParts());
-    const handler = () => setParts(loadParts());
-    window.addEventListener("epo_parts_updated", handler);
-    return () => window.removeEventListener("epo_parts_updated", handler);
+    const h = () => setParts(loadParts());
+    window.addEventListener("epo_parts_updated", h);
+    return () => window.removeEventListener("epo_parts_updated", h);
   }, []);
 
   return (
-    <section id="parts" style={{ background: "#080c14" }}>
+    <section id="parts" style={{ background: T.bg }}>
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px" }}>
-        <div style={{ marginBottom: "40px" }}>
-          <p style={{ color: C.orange, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Available stock</p>
-          <h2 style={{ color: C.text, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.025em", lineHeight: 1.2, marginBottom: "8px" }}>Parts for Sale</h2>
-          <p style={{ color: C.muted, fontSize: "14px", maxWidth: "520px" }}>
-            Quality parts for heavy vehicles. Stock updated regularly — contact us for availability and pricing.
-          </p>
+        <div style={{ marginBottom: "44px" }}>
+          <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Available Stock</p>
+          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "8px" }}>Parts for Sale</h2>
+          <p style={{ color: T.textSub, fontSize: "14px", maxWidth: "500px" }}>Quality parts for heavy vehicles. Stock updated regularly — contact us for current availability and pricing.</p>
         </div>
 
         {parts.length === 0 ? (
-          <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "14px", padding: "48px 24px", textAlign: "center" }}>
-            <IcoPackage />
-            <p style={{ color: C.muted, marginTop: "12px", fontSize: "14px" }}>No parts listed yet. Check back soon or call us.</p>
+          <div style={{ background: T.bgWhite, border: `1.5px dashed ${T.border}`, borderRadius: T.radiusMd, padding: "56px 24px", textAlign: "center", color: T.textMuted }}>
+            <IcoPkg />
+            <p style={{ marginTop: "12px", fontSize: "14px" }}>No parts listed yet. Check back soon or call us to enquire.</p>
           </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "16px" }}>
-            {parts.map((p) => (
-              <article key={p.id} style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "14px", overflow: "hidden", display: "flex", flexDirection: "column", transition: "transform 0.2s, box-shadow 0.2s" }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 32px rgba(0,0,0,0.4)"; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}>
-                <div style={{ height: "160px", background: p.imageUrl ? "none" : "linear-gradient(135deg, #1c2333 0%, #0d1117 100%)", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "8px", overflow: "hidden" }}>
-                  {p.imageUrl ? (
-                    <img src={p.imageUrl} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  ) : (
-                    <>
-                      <IcoPackage />
-                      <span style={{ color: "rgba(255,255,255,0.2)", fontSize: "11px" }}>No photo</span>
-                    </>
-                  )}
-                </div>
-                <div style={{ padding: "16px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                  <h3 style={{ color: C.text, fontWeight: 700, fontSize: "14px", lineHeight: 1.3, margin: 0 }}>{p.name}</h3>
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    {p.price != null ? (
-                      <span style={{ color: C.orange, fontWeight: 800, fontSize: "18px" }}>€{p.price}</span>
-                    ) : (
-                      <span style={{ color: C.muted, fontSize: "13px" }}>Price on request</span>
-                    )}
-                  </div>
-                </div>
-              </article>
-            ))}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "20px" }}>
+            {parts.map((p) => <PartCard key={p.id} p={p} />)}
           </div>
         )}
 
-        {/* Email enquiry strip */}
-        <div style={{ marginTop: "32px", background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "12px", padding: "20px 24px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+        {/* Email enquiry */}
+        <div style={{ marginTop: "32px", background: T.bgWhite, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "22px 28px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "14px", boxShadow: T.shadow }}>
           <div>
-            <p style={{ color: C.text, fontSize: "14px", fontWeight: 600, margin: "0 0 2px" }}>Can't find what you're looking for?</p>
-            <p style={{ color: C.muted, fontSize: "13px", margin: 0 }}>Send us a parts enquiry by email</p>
+            <p style={{ color: T.textMain, fontSize: "15px", fontWeight: 700, margin: "0 0 2px" }}>Can't find what you need?</p>
+            <p style={{ color: T.textSub, fontSize: "13px", margin: 0 }}>Send a parts enquiry by email and we'll get back to you.</p>
           </div>
-          <a href={`mailto:${epoSettings.email}`} style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: `linear-gradient(135deg, ${C.orange} 0%, ${C.orangeDark} 100%)`, color: "#fff", fontWeight: 600, fontSize: "13px", padding: "10px 20px", borderRadius: "8px", textDecoration: "none" }}>
-            <IcoMail /> {epoSettings.email}
+          <a href={`mailto:${epoSettings.emailParts ?? epoSettings.email}`} style={{ display: "inline-flex", alignItems: "center", gap: "7px", border: `2px solid ${T.primary}`, color: T.primary, fontWeight: 700, fontSize: "13px", padding: "10px 20px", borderRadius: T.radius, textDecoration: "none" }}>
+            <IcoMail /> {epoSettings.emailParts ?? epoSettings.email}
           </a>
         </div>
       </div>
@@ -405,55 +510,98 @@ function Parts() {
 /* ─── Contact ────────────────────────────────────────────────────── */
 function Contact() {
   return (
-    <section id="contact" style={{ background: "#0d1117", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
+    <section id="contact" style={{ background: T.bgWhite, borderTop: `1px solid ${T.border}` }}>
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px" }}>
-        <p style={{ color: C.orange, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Get in touch</p>
-        <h2 style={{ color: C.text, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.025em", marginBottom: "40px" }}>Contact</h2>
+        <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Get In Touch</p>
+        <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: "44px" }}>Contact</h2>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px" }}>
-          {/* Phone – primary CTA */}
-          <div style={{ background: `linear-gradient(135deg, ${C.orange} 0%, ${C.orangeDark} 100%)`, borderRadius: "14px", padding: "28px", gridColumn: "span 1" }}>
-            <div style={{ width: "42px", height: "42px", borderRadius: "10px", background: "rgba(0,0,0,0.18)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", marginBottom: "16px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px" }}>
+          {/* Primary phone card */}
+          <div style={{ background: T.primary, borderRadius: T.radiusMd, padding: "28px" }}>
+            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: "rgba(255,255,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", marginBottom: "16px" }}>
               <IcoPhone />
             </div>
-            <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Phone (primary)</p>
-            <a href={`tel:${epoSettings.phone}`} style={{ color: "#fff", fontWeight: 800, fontSize: "20px", textDecoration: "none", display: "block", marginBottom: "6px" }}>{epoSettings.phone}</a>
-            <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "12px", margin: 0 }}>24/7 for breakdown · call for all bookings</p>
+            <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Phone (Primary)</p>
+            <a href={`tel:${epoSettings.phone}`} style={{ color: "#fff", fontWeight: 800, fontSize: "20px", textDecoration: "none", display: "block", marginBottom: "4px" }}>{epoSettings.phone}</a>
+            <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "12px", margin: 0 }}>24/7 for breakdown · all bookings by phone</p>
           </div>
 
-          {/* Address */}
-          <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "14px", padding: "28px" }}>
-            <div style={{ width: "42px", height: "42px", borderRadius: "10px", background: "rgba(249,115,22,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: C.orange, marginBottom: "16px" }}>
+          {/* Secondary phone */}
+          {epoSettings.phoneAlt && (
+            <div style={{ background: T.bg, border: `1.5px solid ${T.borderBlue}`, borderRadius: T.radiusMd, padding: "28px" }}>
+              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+                <IcoPhone />
+              </div>
+              <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Phone (Alternative)</p>
+              <a href={`tel:${epoSettings.phoneAlt}`} style={{ color: T.primary, fontWeight: 800, fontSize: "19px", textDecoration: "none" }}>{epoSettings.phoneAlt}</a>
+            </div>
+          )}
+
+          {/* Accounts phone */}
+          {epoSettings.phoneAccounts && (
+            <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
+              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+                <IcoPhone />
+              </div>
+              <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Accounts</p>
+              <a href={`tel:${epoSettings.phoneAccounts}`} style={{ color: T.primary, fontWeight: 800, fontSize: "19px", textDecoration: "none" }}>{epoSettings.phoneAccounts}</a>
+            </div>
+          )}
+
+          {/* Location */}
+          <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
+            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
               <IcoMapPin />
             </div>
-            <p style={{ color: C.muted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Location</p>
-            <p style={{ color: C.text, fontWeight: 600, fontSize: "15px", margin: 0 }}>{epoSettings.address}</p>
-          </div>
-
-          {/* Parts email */}
-          <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "14px", padding: "28px" }}>
-            <div style={{ width: "42px", height: "42px", borderRadius: "10px", background: "rgba(59,130,246,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: C.blue, marginBottom: "16px" }}>
-              <IcoMail />
-            </div>
-            <p style={{ color: C.muted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Parts enquiries (email only)</p>
-            <a href={`mailto:${epoSettings.email}`} style={{ color: C.text, fontWeight: 600, fontSize: "14px", textDecoration: "none", display: "block" }}>{epoSettings.email}</a>
+            <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Location</p>
+            <p style={{ color: T.textMain, fontWeight: 600, fontSize: "15px", margin: 0 }}>{epoSettings.address}</p>
           </div>
 
           {/* Hours summary */}
-          <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "14px", padding: "28px" }}>
-            <div style={{ width: "42px", height: "42px", borderRadius: "10px", background: "rgba(16,185,129,0.1)", display: "flex", alignItems: "center", justifyContent: "center", color: "#10b981", marginBottom: "16px" }}>
+          <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
+            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
               <IcoClock />
             </div>
-            <p style={{ color: C.muted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "12px" }}>Opening hours</p>
+            <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "12px" }}>Opening Hours</p>
             <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "6px" }}>
               {workingHours.map((h) => (
-                <li key={h.label} style={{ display: "flex", justifyContent: "space-between", color: h.is247 ? C.orange : C.mutedLight, fontSize: "13px", fontWeight: h.is247 ? 700 : 400 }}>
-                  <span>{h.label}</span>
-                  <span>{h.hours}</span>
+                <li key={h.label} style={{ display: "flex", justifyContent: "space-between", color: h.is247 ? T.primary : T.textSub, fontSize: "13px", fontWeight: h.is247 ? 700 : 400 }}>
+                  <span>{h.label}</span><span>{h.hours}</span>
                 </li>
               ))}
             </ul>
           </div>
+
+          {/* General email */}
+          <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
+            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+              <IcoMail />
+            </div>
+            <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>General Enquiries</p>
+            <a href={`mailto:${epoSettings.email}`} style={{ color: T.primary, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.email}</a>
+          </div>
+
+          {/* Parts email */}
+          {epoSettings.emailParts && (
+            <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
+              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+                <IcoMail />
+              </div>
+              <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Parts Enquiries</p>
+              <a href={`mailto:${epoSettings.emailParts}`} style={{ color: T.primary, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.emailParts}</a>
+            </div>
+          )}
+
+          {/* Accounts email */}
+          {epoSettings.emailAccounts && (
+            <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
+              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+                <IcoMail />
+              </div>
+              <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Accounts</p>
+              <a href={`mailto:${epoSettings.emailAccounts}`} style={{ color: T.primary, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.emailAccounts}</a>
+            </div>
+          )}
         </div>
       </div>
     </section>
@@ -463,50 +611,87 @@ function Contact() {
 /* ─── Footer ─────────────────────────────────────────────────────── */
 function Footer() {
   return (
-    <footer style={{ background: "#060a12", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
-      <div style={{ ...container, paddingTop: "32px", paddingBottom: "32px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ background: `linear-gradient(135deg, ${C.orange} 0%, ${C.orangeDark} 100%)`, borderRadius: "6px", width: "24px", height: "24px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 3h15v13H1z"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-            </span>
-            <span style={{ color: C.text, fontWeight: 700, fontSize: "14px" }}>EPO Company</span>
+    <footer style={{ background: T.primaryDark, color: T.textInverse }}>
+      <div style={{ ...container, paddingTop: "40px", paddingBottom: "40px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "32px", marginBottom: "32px" }}>
+          {/* Brand */}
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
+              <img
+                src={logoInverse}
+                alt="EPO Commercials logo"
+                style={{ height: "30px", width: "auto", display: "block" }}
+              />
+            </div>
+            <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", lineHeight: 1.7, margin: 0 }}>
+              {epoSettings.tagline}<br />{epoSettings.address}
+            </p>
           </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
-            <span style={{ display: "flex", alignItems: "center", gap: "5px", color: C.muted, fontSize: "12px" }}>
-              <IcoMapPin />{epoSettings.address}
-            </span>
-            <a href={`tel:${epoSettings.phone}`} style={{ display: "flex", alignItems: "center", gap: "5px", color: C.orange, fontSize: "12px", textDecoration: "none", fontWeight: 600 }}>
-              <IcoPhone />{epoSettings.phone}
-            </a>
-            <span style={{ color: C.muted, fontSize: "12px" }}>Mon–Fri 08:00–18:00 · Sat 08:00–14:00 · 24/7 breakdown</span>
+
+          {/* Contact */}
+          <div>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "12px" }}>Contact</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              <a href={`tel:${epoSettings.phone}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "#fff", fontWeight: 700, fontSize: "14px", textDecoration: "none" }}><IcoPhone />{epoSettings.phone}</a>
+              {epoSettings.phoneAlt && (
+                <a href={`tel:${epoSettings.phoneAlt}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.7)", fontWeight: 600, fontSize: "14px", textDecoration: "none" }}><IcoPhone />{epoSettings.phoneAlt}</a>
+              )}
+              {epoSettings.phoneAccounts && (
+                <a href={`tel:${epoSettings.phoneAccounts}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.7)", fontWeight: 600, fontSize: "14px", textDecoration: "none" }}><IcoPhone />{epoSettings.phoneAccounts}</a>
+              )}
+              <a href={`mailto:${epoSettings.email}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.7)", fontSize: "13px", textDecoration: "none" }}><IcoMail />{epoSettings.email}</a>
+              {epoSettings.emailParts && (
+                <a href={`mailto:${epoSettings.emailParts}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.65)", fontSize: "13px", textDecoration: "none" }}><IcoMail />{epoSettings.emailParts}</a>
+              )}
+              {epoSettings.emailAccounts && (
+                <a href={`mailto:${epoSettings.emailAccounts}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.65)", fontSize: "13px", textDecoration: "none" }}><IcoMail />{epoSettings.emailAccounts}</a>
+              )}
+            </div>
+          </div>
+
+          {/* Hours */}
+          <div>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "12px" }}>Hours</p>
+            {workingHours.map((h) => (
+              <div key={h.label} style={{ display: "flex", justifyContent: "space-between", color: h.is247 ? "#fff" : "rgba(255,255,255,0.65)", fontSize: "13px", fontWeight: h.is247 ? 700 : 400, marginBottom: "5px" }}>
+                <span>{h.label}</span><span>{h.hours}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Nav */}
+          <div>
+            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "12px" }}>Navigation</p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              {["#about", "#services", "#hours", "#parts", "#contact"].map((href) => (
+                <a key={href} href={href} style={{ color: "rgba(255,255,255,0.65)", fontSize: "13px", textDecoration: "none" }}>
+                  {href.replace("#", "").charAt(0).toUpperCase() + href.replace("#", "").slice(1)}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "8px" }}>
-          <div style={{ display: "flex", gap: "16px" }}>
-            {["#about", "#services", "#hours", "#parts", "#contact"].map((href) => (
-              <a key={href} href={href} style={{ color: C.muted, fontSize: "12px", textDecoration: "none" }}>
-                {href.replace("#", "").charAt(0).toUpperCase() + href.replace("#", "").slice(1)}
-              </a>
-            ))}
-          </div>
-          <p style={{ color: C.muted, fontSize: "11px", margin: 0 }}>© {new Date().getFullYear()} EPO Company · All rights reserved</p>
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "20px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
+          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px", margin: 0 }}>© {new Date().getFullYear()} EPO Commercials · All rights reserved · <a href="https://www.epocommercials.ie" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>www.epocommercials.ie</a></p>
+          <a href="#admin" style={{ color: "rgba(255,255,255,0.25)", fontSize: "11px", textDecoration: "none" }}>Admin</a>
         </div>
       </div>
     </footer>
   );
 }
 
-/* ─── Site ───────────────────────────────────────────────────────── */
+/* ─── Root ───────────────────────────────────────────────────────── */
 function Site() {
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: "system-ui, -apple-system, sans-serif" }}>
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: T.fontFamily }}>
       <Header />
       <main style={{ flex: 1 }}>
         <Hero />
         <About />
         <Services />
+        <WhyChoose />
+        <OurCommitment />
         <WorkingHours />
         <Parts />
         <Contact />
@@ -516,16 +701,13 @@ function Site() {
   );
 }
 
-/* ─── Root with routing ──────────────────────────────────────────── */
 export default function App() {
   const [route, setRoute] = useState(window.location.hash);
-
   useEffect(() => {
     const h = () => setRoute(window.location.hash);
     window.addEventListener("hashchange", h);
     return () => window.removeEventListener("hashchange", h);
   }, []);
-
   if (route === "#admin") return <AdminPanel />;
   return <Site />;
 }

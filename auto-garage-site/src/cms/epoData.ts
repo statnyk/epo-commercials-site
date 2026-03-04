@@ -2,7 +2,11 @@ export interface EpoSettings {
   company: string;
   tagline: string;
   phone: string;
+  phoneAlt?: string;
+  phoneAccounts?: string;
   email: string;
+  emailParts?: string;
+  emailAccounts?: string;
   address: string;
   eircode?: string;
 }
@@ -17,8 +21,9 @@ export interface Service {
   id: string;
   title: string;
   description: string;
-  icon: "breakdown" | "cvrt" | "diagnostics" | "hydraulic" | "electrical";
+  icon: "breakdown" | "cvrt" | "diagnostics" | "electrical" | "bus" | "truck";
   highlight?: boolean;
+  bullets?: string[];
 }
 
 export interface Part {
@@ -30,10 +35,14 @@ export interface Part {
 }
 
 export const epoSettings: EpoSettings = {
-  company: "EPO Company",
-  tagline: "Heavy Vehicle Repair & Breakdown Specialists",
-  phone: "+353 1 XXX XXXX",
-  email: "parts@epocompany.ie",
+  company: "EPO Commercials",
+  tagline: "Bus & Heavy-Duty Vehicle Repair Specialists",
+  phone: "+353 87 721 0448",
+  phoneAlt: "+353 87 666 6693",
+  phoneAccounts: "0851788303",
+  email: "info@epocommercials.ie",
+  emailParts: "parts@epocommercials.ie",
+  emailAccounts: "accounts@epocommercials.ie",
   address: "Dublin, Ireland",
 };
 
@@ -48,7 +57,7 @@ export const services: Service[] = [
     id: "breakdown",
     title: "Breakdown Assistance 24/7",
     description:
-      "Round-the-clock emergency recovery and roadside repair for HGVs, buses, LCVs and trailers. We come to you — day or night.",
+      "Round-the-clock emergency recovery and roadside repair for buses, trucks and trailers. We come to you — day or night.",
     icon: "breakdown",
     highlight: true,
   },
@@ -67,18 +76,41 @@ export const services: Service[] = [
     icon: "diagnostics",
   },
   {
-    id: "hydraulic",
-    title: "Hydraulic Hose: Make & Repair",
-    description:
-      "Custom hydraulic hose fabrication and on-site repair for tipper trucks, refuse vehicles, cranes and agricultural equipment.",
-    icon: "hydraulic",
-  },
-  {
     id: "electrical",
     title: "Electrical & Mechanical Repair",
     description:
       "Full electrical and mechanical repair services for buses, HGVs, LCVs, trailers and refuse trucks carried out by qualified technicians.",
     icon: "electrical",
+  },
+  {
+    id: "bus",
+    title: "Bus Repair & Maintenance",
+    description: "",
+    icon: "bus",
+    bullets: [
+      "Full diagnostics and fault finding",
+      "Electrical system repairs",
+      "Engine and gearbox repairs",
+      "Brake systems",
+      "Suspension and steering",
+      "Preventative maintenance programs",
+      "Pre-CVRT inspections",
+    ],
+  },
+  {
+    id: "truck",
+    title: "Truck & Heavy-Duty Vehicle Services",
+    description: "",
+    icon: "truck",
+    bullets: [
+      "Engine diagnostics and overhaul",
+      "Electrical and electronic systems",
+      "Transmission and drivetrain",
+      "Air brake systems",
+      "Suspension repairs",
+      "Fleet servicing contracts",
+      "24/7 emergency roadside breakdown repairs",
+    ],
   },
 ];
 

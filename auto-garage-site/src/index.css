@@ -2,22 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html,
 body {
-  background-color: #020617;
-  color: #020617;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   margin: 0;
   padding: 0;
+  background-color: #F5F7FA;
+  color: #222222;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.6;
 }
 
 a {
-  color: #854d0e; /* amber-800-ish */
-  font-weight: 500;
+  color: #0088FF;
   text-decoration: none;
 }
 
 a:hover {
-  color: #713f12; /* darker amber */
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
