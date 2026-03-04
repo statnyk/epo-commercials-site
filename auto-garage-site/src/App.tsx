@@ -731,7 +731,7 @@ function Footer() {
 
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "20px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
           <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px", margin: 0 }}>© {new Date().getFullYear()} EPO Commercials · All rights reserved · <a href="https://www.epocommercials.ie" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>www.epocommercials.ie</a></p>
-          <a href="#admin" style={{ color: "rgba(255,255,255,0.25)", fontSize: "11px", textDecoration: "none" }}>Admin</a>
+          {import.meta.env.DEV && <a href="#admin" style={{ color: "rgba(255,255,255,0.25)", fontSize: "11px", textDecoration: "none" }}>Admin</a>}
         </div>
       </div>
     </footer>
