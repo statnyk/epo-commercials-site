@@ -27,7 +27,7 @@ jobs:
           node-version: 20
 
       - name: Install deps
-        run: npm install --no-fund --no-audit
+        run: npm ci
 
       - name: Build
         env:
