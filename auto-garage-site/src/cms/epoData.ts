@@ -30,8 +30,8 @@ export interface Part {
   id: string;
   name: string;
   price: number | null;
-  imageUrl: string;
-  addedAt: number;
+  image_url: string;
+  created_at: string;
 }
 
 export const epoSettings: EpoSettings = {
@@ -114,41 +114,57 @@ export const services: Service[] = [
   },
 ];
 
-export const PARTS_STORAGE_KEY = "epo_parts_v1";
+import { supabase } from "../lib/supabase";
 
-export function loadParts(): Part[] {
-  try {
-    const raw = localStorage.getItem(PARTS_STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as Part[]) : defaultParts;
-  } catch {
-    return defaultParts;
-  }
+export async function fetchParts(): Promise<Part[]> {
+  const { data, error } = await supabase
+    .from("parts")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data ?? [];
 }
 
-export function saveParts(parts: Part[]): void {
-  localStorage.setItem(PARTS_STORAGE_KEY, JSON.stringify(parts));
+export async function addPart(part: {
+  name: string;
+  price: number | null;
+  image_url: string;
+}): Promise<Part> {
+  const { data, error } = await supabase
+    .from("parts")
+    .insert(part)
+    .select()
+    .single();
+  if (error) throw error;
+  return data;
 }
 
-const defaultParts: Part[] = [
-  {
-    id: "demo-1",
-    name: "Volvo FH Air Dryer",
-    price: 280,
-    imageUrl: "",
-    addedAt: Date.now() - 86400000,
-  },
-  {
-    id: "demo-2",
-    name: "Mercedes Actros Starter Motor",
-    price: 450,
-    imageUrl: "",
-    addedAt: Date.now() - 172800000,
-  },
-  {
-    id: "demo-3",
-    name: "DAF XF Turbocharger (Reconditioned)",
-    price: 890,
-    imageUrl: "",
-    addedAt: Date.now() - 259200000,
-  },
-];
+export async function updatePart(
+  id: string,
+  updates: Partial<Pick<Part, "name" | "price" | "image_url">>,
+): Promise<Part> {
+  const { data, error } = await supabase
+    .from("parts")
+    .update(updates)
+    .eq("id", id)
+    .select()
+    .single();
+  if (error) throw error;
+  return data;
+}
+
+export async function deletePart(id: string): Promise<void> {
+  const { error } = await supabase.from("parts").delete().eq("id", id);
+  if (error) throw error;
+}
+
+export async function uploadPartImage(file: File): Promise<string> {
+  const ext = file.name.split(".").pop() ?? "jpg";
+  const path = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await supabase.storage
+    .from("parts-images")
+    .upload(path, file);
+  if (error) throw error;
+  const { data } = supabase.storage.from("parts-images").getPublicUrl(path);
+  return data.publicUrl;
+}

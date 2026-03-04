@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { epoSettings, services, workingHours, loadParts } from "./cms/epoData";
+import { epoSettings, services, workingHours, fetchParts } from "./cms/epoData";
 import type { Part } from "./cms/epoData";
 import { T, container } from "./theme";
 import AdminPanel from "./AdminPanel";
@@ -105,11 +105,19 @@ function ServiceCard({ s }: { s: typeof services[number] }) {
 /* ─── Part Card ──────────────────────────────────────────────────── */
 function PartCard({ p }: { p: Part }) {
   const [hov, setHov] = useState(false);
+  const addedLabel =
+    p.created_at
+      ? new Date(p.created_at).toLocaleDateString("en-IE", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        })
+      : null;
   return (
     <article onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ background: T.bgWhite, border: `1.5px solid ${hov ? T.primary : T.border}`, borderRadius: T.radiusMd, overflow: "hidden", display: "flex", flexDirection: "column", boxShadow: hov ? T.shadowHover : T.shadow, transition: "all 0.2s" }}>
       <div style={{ height: "160px", background: T.bg, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "8px", overflow: "hidden" }}>
-        {p.imageUrl ? (
-          <img src={p.imageUrl} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        {p.image_url ? (
+          <img src={p.image_url} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         ) : (
           <>
             <IcoPkg />
@@ -126,6 +134,11 @@ function PartCard({ p }: { p: Part }) {
             <span style={{ color: T.textMuted, fontSize: "13px" }}>Price on request</span>
           )}
         </div>
+        {addedLabel && (
+          <p style={{ color: T.textMuted, fontSize: "11px", margin: 0 }}>
+            Added {addedLabel}
+          </p>
+        )}
       </div>
     </article>
   );
@@ -160,7 +173,7 @@ function Header() {
       <div style={{ ...container, height: "68px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 
         {/* Logo */}
-        <a href="#" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
+        <a href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
           <img
             src={logoMain}
             alt="EPO Commercials logo"
@@ -463,14 +476,13 @@ function WorkingHours() {
 }
 
 /* ─── Parts ──────────────────────────────────────────────────────── */
-function Parts() {
+function Parts({ limit, showViewMore }: { limit?: number; showViewMore?: boolean } = {}) {
   const [parts, setParts] = useState<Part[]>([]);
   useEffect(() => {
-    setParts(loadParts());
-    const h = () => setParts(loadParts());
-    window.addEventListener("epo_parts_updated", h);
-    return () => window.removeEventListener("epo_parts_updated", h);
+    fetchParts().then(setParts).catch(() => setParts([]));
   }, []);
+
+  const displayed = limit != null ? parts.slice(0, limit) : parts;
 
   return (
     <section id="parts" style={{ background: T.bg }}>
@@ -481,14 +493,37 @@ function Parts() {
           <p style={{ color: T.textSub, fontSize: "14px", maxWidth: "500px" }}>Quality parts for heavy vehicles. Stock updated regularly — contact us for current availability and pricing.</p>
         </div>
 
-        {parts.length === 0 ? (
+        {displayed.length === 0 ? (
           <div style={{ background: T.bgWhite, border: `1.5px dashed ${T.border}`, borderRadius: T.radiusMd, padding: "56px 24px", textAlign: "center", color: T.textMuted }}>
             <IcoPkg />
             <p style={{ marginTop: "12px", fontSize: "14px" }}>No parts listed yet. Check back soon or call us to enquire.</p>
           </div>
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "20px" }}>
-            {parts.map((p) => <PartCard key={p.id} p={p} />)}
+            {displayed.map((p) => <PartCard key={p.id} p={p} />)}
+          </div>
+        )}
+
+        {showViewMore && limit != null && parts.length > limit && (
+          <div style={{ marginTop: "28px", textAlign: "center" }}>
+            <a
+              href="/parts"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "11px 26px",
+                borderRadius: T.radius,
+                border: `1.5px solid ${T.primary}`,
+                color: T.primary,
+                fontWeight: 700,
+                fontSize: "14px",
+                textDecoration: "none",
+                background: T.bgWhite,
+              }}
+            >
+              View more parts
+            </a>
           </div>
         )}
 
@@ -504,6 +539,28 @@ function Parts() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ─── Parts Page (all parts) ─────────────────────────────────────── */
+function PartsPage() {
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: T.fontFamily }}>
+      <Header />
+      <main style={{ flex: 1 }}>
+        <section style={{ background: T.bgWhite, borderBottom: `1px solid ${T.border}` }}>
+          <div style={{ ...container, paddingTop: "60px", paddingBottom: "32px" }}>
+            <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Parts Catalogue</p>
+            <h1 style={{ color: T.primaryDark, fontSize: "clamp(1.8rem, 4vw, 2.4rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: 0 }}>All Parts for Sale</h1>
+            <p style={{ color: T.textSub, fontSize: "14px", marginTop: "10px", maxWidth: "520px" }}>
+              Browse the full list of parts currently listed for heavy vehicles. For availability and pricing confirmation, please contact us by phone or email.
+            </p>
+          </div>
+        </section>
+        <Parts />
+      </main>
+      <Footer />
+    </div>
   );
 }
 
@@ -693,7 +750,7 @@ function Site() {
         <WhyChoose />
         <OurCommitment />
         <WorkingHours />
-        <Parts />
+        <Parts limit={4} showViewMore />
         <Contact />
       </main>
       <Footer />
@@ -702,12 +759,17 @@ function Site() {
 }
 
 export default function App() {
-  const [route, setRoute] = useState(window.location.hash);
+  const [route, setRoute] = useState(() => window.location.hash || window.location.pathname);
   useEffect(() => {
-    const h = () => setRoute(window.location.hash);
+    const h = () => setRoute(window.location.hash || window.location.pathname);
     window.addEventListener("hashchange", h);
-    return () => window.removeEventListener("hashchange", h);
+    window.addEventListener("popstate", h);
+    return () => {
+      window.removeEventListener("hashchange", h);
+      window.removeEventListener("popstate", h);
+    };
   }, []);
   if (route === "#admin") return <AdminPanel />;
+  if (route === "/parts") return <PartsPage />;
   return <Site />;
 }
