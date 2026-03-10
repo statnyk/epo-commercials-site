@@ -63,7 +63,7 @@ const svcIconMap: Record<string, () => React.ReactElement> = {
   breakdown: IcoTruck, cvrt: IcoClip, diagnostics: IcoCpu, electrical: IcoZap, bus: IcoTruck, truck: IcoTruck,
 };
 const svcColorMap: Record<string, string> = {
-  breakdown: T.primary, cvrt: "#0ea5e9", diagnostics: "#6366f1", electrical: "#f97316", bus: "#10b981", truck: "#f59e0b",
+  breakdown: "#DC2626", cvrt: "#0ea5e9", diagnostics: "#6366f1", electrical: "#f97316", bus: "#10b981", truck: "#f59e0b",
 };
 
 /* ─── Service Card ───────────────────────────────────────────────── */
@@ -80,7 +80,7 @@ function ServiceCard({ s }: { s: typeof services[number] }) {
         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", flexWrap: "wrap" }}>
           <h3 style={{ color: T.textMain, fontWeight: 700, fontSize: "15px", margin: 0 }}>{s.title}</h3>
           {s.highlight && (
-            <span style={{ background: T.primary, color: "#fff", fontSize: "10px", fontWeight: 700, padding: "2px 8px", borderRadius: "100px" }}>24/7</span>
+            <span style={{ background: color, color: "#fff", fontSize: "10px", fontWeight: 700, padding: "2px 8px", borderRadius: "100px" }}>24/7</span>
           )}
         </div>
         {s.bullets && s.bullets.length > 0 ? (
@@ -240,9 +240,9 @@ function Hero() {
         {/* Left: copy */}
         <div>
           {/* 24/7 badge */}
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: T.primaryLight, border: `1px solid ${T.borderBlue}`, borderRadius: "100px", padding: "5px 14px", marginBottom: "24px" }}>
-            <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: T.accent, display: "inline-block" }} />
-            <span style={{ color: T.primary, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>24/7 Breakdown Assistance · Dublin, Ireland</span>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "#FEE2E2", border: "1px solid rgba(220,38,38,0.25)", borderRadius: "100px", padding: "5px 14px", marginBottom: "24px" }}>
+            <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#DC2626", display: "inline-block" }} />
+            <span style={{ color: "#DC2626", fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>24/7 Breakdown Assistance · Dublin, Ireland</span>
           </div>
 
           <h1 style={{ color: T.primaryDark, fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.02em", maxWidth: "580px", marginBottom: "20px" }}>
@@ -278,7 +278,7 @@ function Hero() {
         <div style={{ borderRadius: T.radiusLg, overflow: "hidden", boxShadow: T.shadowMd, aspectRatio: "4/3", position: "relative" }}>
           <img src={heroImg} alt="EPO Company service van at work" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
           {/* 24/7 overlay badge */}
-          <div style={{ position: "absolute", bottom: "16px", left: "16px", background: T.primary, color: "#fff", borderRadius: T.radius, padding: "10px 16px", boxShadow: T.shadowMd }}>
+          <div style={{ position: "absolute", bottom: "16px", left: "16px", background: "#DC2626", color: "#fff", borderRadius: T.radius, padding: "10px 16px", boxShadow: T.shadowMd }}>
             <div style={{ fontWeight: 900, fontSize: "22px", lineHeight: 1 }}>24/7</div>
             <div style={{ fontSize: "11px", fontWeight: 600, opacity: 0.85 }}>Breakdown response</div>
           </div>

@@ -12,7 +12,7 @@ export const T = {
   textInverse:  "#FFFFFF",
 
   /* Surfaces */
-  bg:           "#F5F7FA",
+  bg:           "#E2E8F0",
   bgWhite:      "#FFFFFF",
   bgDark:       "#002F5E",
 
