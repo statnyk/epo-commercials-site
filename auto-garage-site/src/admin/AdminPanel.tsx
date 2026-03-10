@@ -265,7 +265,7 @@ export default function AdminPanel() {
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "32px 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "28px", alignItems: "start" }}>
         {/* Add part form */}
         <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "14px", padding: "28px" }}>
-          <h2 style={{ color: T.primaryDark, fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>Add New Part</h2>
+          <h2 style={{ color: T.accent, fontWeight: 700, fontSize: "16px", marginBottom: "20px" }}>Add New Part</h2>
 
           <div style={{ marginBottom: "14px" }}>
             <Label>Part name *</Label>
@@ -323,7 +323,7 @@ export default function AdminPanel() {
         {/* Parts list */}
         <div>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
-            <h2 style={{ color: T.primaryDark, fontWeight: 700, fontSize: "16px", margin: 0 }}>
+            <h2 style={{ color: T.accent, fontWeight: 700, fontSize: "16px", margin: 0 }}>
               Listed Parts <span style={{ color: C.muted, fontSize: "14px", fontWeight: 400 }}>({parts.length})</span>
             </h2>
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -344,7 +344,7 @@ export default function AdminPanel() {
                   Clear all
                 </button>
               )}
-              <button onClick={loadAllParts} style={{ background: T.primaryLight, border: `1px solid ${T.borderBlue}`, color: T.primary, fontWeight: 600, fontSize: "12px", padding: "5px 12px", borderRadius: "6px", cursor: "pointer" }}>
+              <button onClick={loadAllParts} style={{ background: T.primaryLight, border: `1px solid ${T.borderBlue}`, color: T.accent, fontWeight: 600, fontSize: "12px", padding: "5px 12px", borderRadius: "6px", cursor: "pointer" }}>
                 Refresh
               </button>
             </div>
@@ -382,7 +382,7 @@ export default function AdminPanel() {
                   ) : (
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <p style={{ color: C.text, fontWeight: 600, fontSize: "14px", margin: "0 0 2px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.name}</p>
-                      <p style={{ color: p.price != null ? T.primary : C.muted, fontSize: "13px", fontWeight: p.price != null ? 700 : 400, margin: 0 }}>
+                      <p style={{ color: p.price != null ? T.accent : C.muted, fontSize: "13px", fontWeight: p.price != null ? 700 : 400, margin: 0 }}>
                         {p.price != null ? `€${p.price}` : "Price on request"}
                       </p>
                     </div>
@@ -390,7 +390,7 @@ export default function AdminPanel() {
 
                   {editingId !== p.id && (
                     <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
-                      <button onClick={() => startEdit(p)} style={{ background: T.primaryLight, border: `1px solid ${T.borderBlue}`, color: T.primary, fontWeight: 600, fontSize: "12px", padding: "5px 10px", borderRadius: "6px", cursor: "pointer" }}>
+                      <button onClick={() => startEdit(p)} style={{ background: T.primaryLight, border: `1px solid ${T.borderBlue}`, color: T.accent, fontWeight: 600, fontSize: "12px", padding: "5px 10px", borderRadius: "6px", cursor: "pointer" }}>
                         Edit
                       </button>
                       <button onClick={() => handleDeletePart(p.id)} style={{ background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.2)", color: C.red, fontWeight: 600, fontSize: "12px", padding: "5px 10px", borderRadius: "6px", cursor: "pointer" }}>
