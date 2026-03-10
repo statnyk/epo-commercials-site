@@ -18,7 +18,7 @@ export default function WhyChoose() {
         <div style={{ textAlign: "center", marginBottom: "52px" }}>
           <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>Our Strengths</p>
           <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 12px" }}>Why Choose EPO Commercials</h2>
-          <p style={{ color: T.textSub, fontSize: "15px", maxWidth: "480px", margin: "0 auto" }}>
+          <p style={{ color: T.textMain, fontSize: "16px", lineHeight: 1.7, maxWidth: "480px", margin: "0 auto" }}>
             We bring deep expertise and genuine dedication to every vehicle we service.
           </p>
         </div>

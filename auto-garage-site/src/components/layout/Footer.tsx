@@ -47,7 +47,7 @@ export default function Footer() {
           <div>
             <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "12px" }}>Hours</p>
             {workingHours.map((h) => (
-              <div key={h.label} style={{ display: "flex", justifyContent: "space-between", color: h.is247 ? "#fff" : "rgba(255,255,255,0.65)", fontSize: "13px", fontWeight: h.is247 ? 700 : 400, marginBottom: "5px" }}>
+              <div key={h.label} style={{ display: "flex", justifyContent: "space-between", color: h.is247 ? T.heroBadgeRed : "rgba(255,255,255,0.65)", fontSize: "13px", fontWeight: h.is247 ? 700 : 400, marginBottom: "5px" }}>
                 <span>{h.label}</span><span>{h.hours}</span>
               </div>
             ))}
@@ -67,7 +67,7 @@ export default function Footer() {
         </div>
 
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "20px" }}>
-          <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px", margin: 0 }}>© {new Date().getFullYear()} EPO Commercials · All rights reserved · <a href="https://www.epocommercials.ie" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>www.epocommercials.ie</a></p>
+          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "13px", margin: 0 }}>© {new Date().getFullYear()} EPO Commercials · All rights reserved · <a href="https://www.epocommercials.ie" style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>www.epocommercials.ie</a></p>
         </div>
       </div>
     </footer>

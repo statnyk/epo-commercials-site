@@ -66,12 +66,15 @@ export default function Hero() {
             { v: "CVRT",    l: "Pre-test specialists"  },
             { v: "HGV",     l: "Buses & trucks"        },
             { v: "All makes", l: "Brands covered"      },
-          ].map((s) => (
-            <div key={s.l} style={{ textAlign: "center" }}>
-              <div style={{ color: T.accent, fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 900, lineHeight: 1 }}>{s.v}</div>
-              <div style={{ color: T.textMuted, fontSize: "12px", marginTop: "4px" }}>{s.l}</div>
-            </div>
-          ))}
+          ].map((s) => {
+            const isBreakdown = s.l === "Breakdown assistance";
+            return (
+              <div key={s.l} style={{ textAlign: "center" }}>
+                <div style={{ color: isBreakdown ? T.heroBadgeRed : T.accent, fontSize: "clamp(18px, 2.5vw, 24px)", fontWeight: 900, lineHeight: 1 }}>{s.v}</div>
+                <div style={{ color: isBreakdown ? T.heroBadgeRed : T.textMuted, fontSize: "12px", marginTop: "4px" }}>{s.l}</div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

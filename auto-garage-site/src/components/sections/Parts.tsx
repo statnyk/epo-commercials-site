@@ -59,7 +59,7 @@ export default function Parts({ limit, showViewMore }: { limit?: number; showVie
         <div style={{ marginBottom: "44px" }}>
           <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Available Stock</p>
           <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "8px" }}>Parts for Sale</h2>
-          <p style={{ color: T.textSub, fontSize: "14px", maxWidth: "500px" }}>Quality parts for heavy vehicles. Stock updated regularly — contact us for current availability and pricing.</p>
+          <p style={{ color: T.textMain, fontSize: "15px", lineHeight: 1.7, maxWidth: "500px" }}>Quality parts for heavy vehicles. Stock updated regularly — contact us for current availability and pricing.</p>
         </div>
 
         {displayed.length === 0 ? (
@@ -100,7 +100,7 @@ export default function Parts({ limit, showViewMore }: { limit?: number; showVie
         <div style={{ marginTop: "32px", background: T.bgWhite, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "22px 28px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "14px", boxShadow: T.shadow }}>
           <div>
             <p style={{ color: T.textMain, fontSize: "15px", fontWeight: 700, margin: "0 0 2px" }}>Can't find what you need?</p>
-            <p style={{ color: T.textSub, fontSize: "13px", margin: 0 }}>Send a parts enquiry by email and we'll get back to you.</p>
+            <p style={{ color: T.textMain, fontSize: "14px", lineHeight: 1.6, margin: 0 }}>Send a parts enquiry by email and we'll get back to you.</p>
           </div>
           <a href={`mailto:${epoSettings.emailParts ?? epoSettings.email}`} style={{ display: "inline-flex", alignItems: "center", gap: "7px", border: `2px solid ${T.accent}`, color: T.accent, fontWeight: 700, fontSize: "13px", padding: "10px 20px", borderRadius: T.radius, textDecoration: "none" }}>
             <IcoMail /> {epoSettings.emailParts ?? epoSettings.email}

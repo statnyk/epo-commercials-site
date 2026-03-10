@@ -21,7 +21,7 @@ export default function About() {
         <div>
           <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>About Us</p>
           <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "20px" }}>About EPO Commercials</h2>
-          <p style={{ color: T.textSub, fontSize: "15px", lineHeight: 1.85, marginBottom: "28px" }}>
+          <p style={{ color: T.textMain, fontSize: "16px", lineHeight: 1.8, marginBottom: "28px" }}>
             EPO Commercials is a Dublin-based mechanical service company specialising in the repair, maintenance, and diagnostics of buses, trucks, and heavy-duty vehicles. With extensive hands-on experience in the commercial transport sector, our qualified technicians deliver reliable, efficient, and professional services designed to minimise downtime and maximise fleet performance.
           </p>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
@@ -30,11 +30,11 @@ export default function About() {
                 <span style={{ flexShrink: 0, marginTop: "3px", width: "18px", height: "18px", borderRadius: "50%", background: T.primary, display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#fff" }}>
                   <IcoCheck />
                 </span>
-                <span style={{ color: T.textSub, fontSize: "13px", lineHeight: 1.45 }}>{b}</span>
+                <span style={{ color: T.textMain, fontSize: "14px", lineHeight: 1.5 }}>{b}</span>
               </div>
             ))}
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px", color: T.textMuted, fontSize: "13px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "6px", color: T.textSub, fontSize: "14px" }}>
             <IcoMapPin /><span>{epoSettings.address}</span>
           </div>
         </div>

@@ -17,12 +17,12 @@ export default function WorkingHours() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {workingHours.map((h) => (
-            <div key={h.label} style={{ background: h.is247 ? T.primaryLight : T.bg, border: h.is247 ? `1.5px solid ${T.borderBlue}` : `1.5px solid ${T.border}`, borderRadius: T.radius, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
+            <div key={h.label} style={{ background: h.is247 ? "rgba(239,68,68,0.15)" : T.bg, border: h.is247 ? `1.5px solid ${T.heroBadgeRed}` : `1.5px solid ${T.border}`, borderRadius: T.radius, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                <span style={{ color: h.is247 ? T.accent : T.textMuted }}><IcoClock /></span>
-                <span style={{ color: h.is247 ? T.accent : T.textMain, fontWeight: h.is247 ? 700 : 500, fontSize: "14px" }}>{h.label}</span>
+                <span style={{ color: h.is247 ? T.heroBadgeRed : T.textMuted }}><IcoClock /></span>
+                <span style={{ color: h.is247 ? T.heroBadgeRed : T.textMain, fontWeight: h.is247 ? 700 : 500, fontSize: "14px" }}>{h.label}</span>
               </div>
-              <span style={{ color: h.is247 ? T.accent : T.textMain, fontWeight: 700, fontSize: h.is247 ? "16px" : "14px", whiteSpace: "nowrap" }}>{h.hours}</span>
+              <span style={{ color: h.is247 ? T.heroBadgeRed : T.textMain, fontWeight: 700, fontSize: h.is247 ? "16px" : "14px", whiteSpace: "nowrap" }}>{h.hours}</span>
             </div>
           ))}
         </div>
