@@ -27,18 +27,22 @@ function useIsDesktop(bp = 768) {
 function BtnPrimary({ href, children, size = "md" }: { href: string; children: React.ReactNode; size?: "sm" | "md" | "lg" }) {
   const pad = size === "lg" ? "15px 32px" : size === "sm" ? "8px 18px" : "11px 24px";
   const fs  = size === "lg" ? "16px" : size === "sm" ? "13px" : "14px";
+  const minW = size === "lg" ? "240px" : undefined;
   const [hov, setHov] = useState(false);
   return (
-    <a href={href} style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: hov ? T.primaryDark : T.primary, color: "#fff", fontWeight: 700, fontSize: fs, padding: pad, borderRadius: T.radius, textDecoration: "none", transition: "background 0.18s", boxShadow: T.shadowMd }} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
+    <a href={href} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px", background: hov ? T.primaryDark : T.primary, color: "#fff", fontWeight: 700, fontSize: fs, padding: pad, border: "2px solid transparent", borderRadius: T.radius, textDecoration: "none", transition: "background 0.18s, border-color 0.18s", boxShadow: T.shadowMd, minWidth: minW, boxSizing: "border-box" }} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
       {children}
     </a>
   );
 }
 
-function BtnOutline({ href, children }: { href: string; children: React.ReactNode }) {
+function BtnOutline({ href, children, size = "md" }: { href: string; children: React.ReactNode; size?: "sm" | "md" | "lg" }) {
+  const pad = size === "lg" ? "15px 32px" : size === "sm" ? "8px 18px" : "11px 24px";
+  const fs  = size === "lg" ? "16px" : size === "sm" ? "13px" : "14px";
+  const minW = size === "lg" ? "240px" : undefined;
   const [hov, setHov] = useState(false);
   return (
-    <a href={href} style={{ display: "inline-flex", alignItems: "center", gap: "8px", border: `2px solid ${T.primary}`, color: hov ? "#fff" : T.primary, background: hov ? T.primary : "transparent", fontWeight: 700, fontSize: "14px", padding: "11px 24px", borderRadius: T.radius, textDecoration: "none", transition: "all 0.18s" }} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
+    <a href={href} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px", border: `2px solid ${hov ? T.primaryDark : T.primary}`, color: hov ? "#fff" : T.primary, background: hov ? T.primary : "transparent", fontWeight: 700, fontSize: fs, padding: pad, borderRadius: T.radius, textDecoration: "none", transition: "all 0.18s", minWidth: minW, boxSizing: "border-box" }} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
       {children}
     </a>
   );
@@ -230,7 +234,7 @@ function Header() {
               <IcoPhone /> {epoSettings.phone}
             </BtnPrimary>
             {epoSettings.phoneAlt && (
-              <BtnOutline href={`tel:${epoSettings.phoneAlt}`}>
+              <BtnOutline href={`tel:${epoSettings.phoneAlt}`} size="lg">
                 <IcoPhone /> {epoSettings.phoneAlt}
               </BtnOutline>
             )}
@@ -276,7 +280,7 @@ function Hero() {
               <IcoPhone /> {epoSettings.phone}
             </BtnPrimary>
             {epoSettings.phoneAlt && (
-              <BtnOutline href={`tel:${epoSettings.phoneAlt}`}>
+              <BtnOutline href={`tel:${epoSettings.phoneAlt}`} size="lg">
                 <IcoPhone /> {epoSettings.phoneAlt}
               </BtnOutline>
             )}
