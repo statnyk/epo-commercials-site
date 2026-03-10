@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "./App.css";
 import { epoSettings, services, workingHours, fetchParts } from "./cms/epoData";
 import type { Part } from "./cms/epoData";
 import { T, container } from "./theme";
@@ -311,7 +312,29 @@ function Hero() {
           ))}
         </div>
       </div>
+
+      {/* Scroll-down button */}
+      <div style={{ display: "flex", justifyContent: "center", paddingBottom: "28px", marginTop: "-8px" }}>
+        <ScrollDownBtn />
+      </div>
     </section>
+  );
+}
+
+function ScrollDownBtn() {
+  const [hov, setHov] = useState(false);
+  return (
+    <button
+      onClick={() => document.querySelector("footer")?.scrollIntoView({ behavior: "smooth" })}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      title="Scroll to bottom"
+      style={{ width: "44px", height: "44px", borderRadius: "50%", border: `2px solid ${hov ? T.primary : T.border}`, background: hov ? T.primaryLight : T.bgWhite, color: hov ? T.primary : T.textMuted, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s", boxShadow: hov ? T.shadowMd : T.shadow, animation: "scrollBounce 2s ease-in-out infinite" }}
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </button>
   );
 }
 
