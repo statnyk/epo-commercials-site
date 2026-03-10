@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/epo-commercials-site/",
+  base: "/",
   plugins: [react()],
   server: {
     allowedHosts: true,

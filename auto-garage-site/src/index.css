@@ -12,8 +12,8 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: #E2E8F0;
-  color: #222222;
+  background-color: #1e2530;
+  color: #f1f5f9;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -21,8 +21,17 @@ body {
   line-height: 1.6;
 }
 
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
 a {
-  color: #0088FF;
+  color: #3b82f6;
   text-decoration: none;
 }
 
@@ -34,4 +43,13 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [style*="scrollBounce"] { animation: none; }
 }

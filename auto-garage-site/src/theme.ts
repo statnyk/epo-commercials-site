@@ -2,26 +2,27 @@ export const T = {
   /* Brand */
   primary:      "#0052A3",
   primaryDark:  "#002F5E",
-  primaryLight: "#E8F0FB",
-  accent:       "#0088FF",
+  primaryLight: "rgba(0,82,163,0.22)",
+  accent:       "#3b82f6",
 
-  /* Text */
-  textMain:     "#222222",
-  textSub:      "#4B5563",
-  textMuted:    "#9CA3AF",
+  /* Text (on dark backgrounds) */
+  textMain:     "#f1f5f9",
+  textSub:      "#94a3b8",
+  textMuted:    "#64748b",
   textInverse:  "#FFFFFF",
 
-  /* Surfaces */
-  bg:           "#E2E8F0",
-  bgWhite:      "#FFFFFF",
+  /* Surfaces – darker, solid (no white) */
+  bg:           "#1e2530",
+  bgWhite:      "#252d3b",
   bgDark:       "#002F5E",
 
-  /* UI */
-  border:       "#E5E7EB",
-  borderBlue:   "rgba(0,82,163,0.18)",
-  shadow:       "0 2px 8px rgba(0,82,163,0.08)",
-  shadowMd:     "0 4px 16px rgba(0,82,163,0.12)",
-  shadowHover:  "0 8px 28px rgba(0,82,163,0.18)",
+  /* UI – red only for Hero 24/7 badges */
+  heroBadgeRed: "#b91c1c",
+  border:       "rgba(255,255,255,0.08)",
+  borderBlue:   "rgba(0,82,163,0.35)",
+  shadow:       "0 2px 12px rgba(0,0,0,0.25)",
+  shadowMd:     "0 4px 20px rgba(0,0,0,0.35)",
+  shadowHover:  "0 8px 28px rgba(0,0,0,0.4)",
 
   /* Radius */
   radius:       "8px",

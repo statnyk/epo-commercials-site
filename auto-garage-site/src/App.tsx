@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./App.css";
 import { epoSettings, services, workingHours, fetchParts } from "./cms/epoData";
 import type { Part } from "./cms/epoData";
 import { T, container } from "./theme";
@@ -74,7 +73,7 @@ const svcIconMap: Record<string, () => React.ReactElement> = {
   breakdown: IcoTruck, cvrt: IcoClip, diagnostics: IcoCpu, electrical: IcoZap, bus: IcoTruck, truck: IcoTruck,
 };
 const svcColorMap: Record<string, string> = {
-  breakdown: "#DC2626", cvrt: "#0ea5e9", diagnostics: "#6366f1", electrical: "#f97316", bus: "#10b981", truck: "#f59e0b",
+  breakdown: T.primary, cvrt: "#0ea5e9", diagnostics: "#6366f1", electrical: "#f97316", bus: "#10b981", truck: "#f59e0b",
 };
 
 /* ─── Service Card ───────────────────────────────────────────────── */
@@ -186,7 +185,7 @@ function Header() {
         {/* Logo */}
         <a href="/" style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
           <img
-            src={logoMain}
+            src={logoInverse}
             alt="EPO Commercials logo"
             style={{ height: "34px", width: "auto", display: "block" }}
           />
@@ -250,15 +249,15 @@ function Hero() {
 
         {/* Left: copy */}
         <div>
-          {/* 24/7 badge */}
-          <div style={{ display: "inline-flex", alignItems: "center", gap: "7px", background: "#FEE2E2", border: "1px solid rgba(220,38,38,0.25)", borderRadius: "100px", padding: "5px 14px", marginBottom: "24px" }}>
-            <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#DC2626", display: "inline-block" }} />
-            <span style={{ color: "#DC2626", fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>24/7 Breakdown Assistance · Dublin, Ireland</span>
+          {/* 24/7 badge – red only here */}
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "8px", background: T.heroBadgeRed, border: "1px solid rgba(255,255,255,0.15)", borderRadius: "100px", padding: "6px 16px", marginBottom: "24px" }}>
+            <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "rgba(255,255,255,0.9)", display: "inline-block", flexShrink: 0 }} />
+            <span style={{ color: "#fff", fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em" }}>24/7 Breakdown Assistance · Dublin, Ireland</span>
           </div>
 
-          <h1 style={{ color: T.primaryDark, fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.02em", maxWidth: "580px", marginBottom: "20px" }}>
+          <h1 style={{ color: T.textMain, fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 900, lineHeight: 1.1, letterSpacing: "-0.02em", maxWidth: "580px", marginBottom: "20px" }}>
             Bus &amp; Heavy-Duty Vehicle<br />
-            <span style={{ color: T.primary }}>Repair Specialists</span>
+            <span style={{ color: T.accent }}>Repair Specialists</span>
           </h1>
 
           <p style={{ color: T.textSub, fontSize: "clamp(15px, 1.8vw, 17px)", lineHeight: 1.8, maxWidth: "520px", marginBottom: "16px" }}>
@@ -267,7 +266,7 @@ function Hero() {
 
           <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "36px" }}>
             {["Bus Specialists", "CVRT Pre-Test", "Computer Diagnostics", "Electrical Repair", "All Makes Covered"].map((tag) => (
-              <span key={tag} style={{ background: T.bgWhite, border: `1px solid ${T.borderBlue}`, color: T.primary, fontSize: "12px", fontWeight: 600, padding: "4px 12px", borderRadius: "100px" }}>{tag}</span>
+              <span key={tag} style={{ background: "transparent", border: `1.5px solid ${T.borderBlue}`, color: T.accent, fontSize: "12px", fontWeight: 600, padding: "6px 14px", borderRadius: "100px" }}>{tag}</span>
             ))}
           </div>
 
@@ -288,10 +287,10 @@ function Hero() {
         {/* Right: image */}
         <div style={{ borderRadius: T.radiusLg, overflow: "hidden", boxShadow: T.shadowMd, aspectRatio: "4/3", position: "relative" }}>
           <img src={heroImg} alt="EPO Company service van at work" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          {/* 24/7 overlay badge */}
-          <div style={{ position: "absolute", bottom: "16px", left: "16px", background: "#DC2626", color: "#fff", borderRadius: T.radius, padding: "10px 16px", boxShadow: T.shadowMd }}>
+          {/* 24/7 overlay badge – red only here */}
+          <div style={{ position: "absolute", bottom: "16px", left: "16px", background: T.heroBadgeRed, color: "#fff", borderRadius: T.radius, padding: "10px 16px", boxShadow: T.shadowMd }}>
             <div style={{ fontWeight: 900, fontSize: "22px", lineHeight: 1 }}>24/7</div>
-            <div style={{ fontSize: "11px", fontWeight: 600, opacity: 0.85 }}>Breakdown response</div>
+            <div style={{ fontSize: "11px", fontWeight: 600, opacity: 0.9 }}>Breakdown response</div>
           </div>
         </div>
       </div>
@@ -334,7 +333,7 @@ function About() {
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "60px", alignItems: "center" }}>
         <div>
           <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>About Us</p>
-          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "20px" }}>About EPO Commercials</h2>
+          <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "20px" }}>About EPO Commercials</h2>
           <p style={{ color: T.textSub, fontSize: "15px", lineHeight: 1.85, marginBottom: "28px" }}>
             EPO Commercials is a Dublin-based mechanical service company specialising in the repair, maintenance, and diagnostics of buses, trucks, and heavy-duty vehicles. With extensive hands-on experience in the commercial transport sector, our qualified technicians deliver reliable, efficient, and professional services designed to minimise downtime and maximise fleet performance.
           </p>
@@ -373,7 +372,7 @@ function Services() {
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px" }}>
         <div style={{ textAlign: "center", marginBottom: "52px" }}>
           <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>What We Offer</p>
-          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 12px" }}>Our Services</h2>
+          <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 12px" }}>Our Services</h2>
           <p style={{ color: T.textSub, fontSize: "15px", maxWidth: "480px", margin: "0 auto" }}>
             Professional repair and maintenance for all heavy vehicles — call us to book an appointment.
           </p>
@@ -415,7 +414,7 @@ function WhyChoose() {
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px" }}>
         <div style={{ textAlign: "center", marginBottom: "52px" }}>
           <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>Our Strengths</p>
-          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 12px" }}>Why Choose EPO Commercials</h2>
+          <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: "0 0 12px" }}>Why Choose EPO Commercials</h2>
           <p style={{ color: T.textSub, fontSize: "15px", maxWidth: "480px", margin: "0 auto" }}>
             We bring deep expertise and genuine dedication to every vehicle we service.
           </p>
@@ -464,7 +463,7 @@ function WorkingHours() {
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "60px", alignItems: "center" }}>
         <div>
           <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "10px" }}>Availability</p>
-          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "16px" }}>Working Hours</h2>
+          <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "16px" }}>Working Hours</h2>
           <p style={{ color: T.textSub, fontSize: "15px", lineHeight: 1.8 }}>
             Regular workshop hours apply to all scheduled services.<br />
             For breakdowns — we're available <strong style={{ color: T.primary }}>around the clock, every day of the year</strong>.
@@ -501,7 +500,7 @@ function Parts({ limit, showViewMore }: { limit?: number; showViewMore?: boolean
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px" }}>
         <div style={{ marginBottom: "44px" }}>
           <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Available Stock</p>
-          <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "8px" }}>Parts for Sale</h2>
+          <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: "8px" }}>Parts for Sale</h2>
           <p style={{ color: T.textSub, fontSize: "14px", maxWidth: "500px" }}>Quality parts for heavy vehicles. Stock updated regularly — contact us for current availability and pricing.</p>
         </div>
 
@@ -563,7 +562,7 @@ function PartsPage() {
         <section style={{ background: T.bgWhite, borderBottom: `1px solid ${T.border}` }}>
           <div style={{ ...container, paddingTop: "60px", paddingBottom: "32px" }}>
             <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Parts Catalogue</p>
-            <h1 style={{ color: T.primaryDark, fontSize: "clamp(1.8rem, 4vw, 2.4rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: 0 }}>All Parts for Sale</h1>
+            <h1 style={{ color: T.textMain, fontSize: "clamp(1.8rem, 4vw, 2.4rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: 0 }}>All Parts for Sale</h1>
             <p style={{ color: T.textSub, fontSize: "14px", marginTop: "10px", maxWidth: "520px" }}>
               Browse the full list of parts currently listed for heavy vehicles. For availability and pricing confirmation, please contact us by phone or email.
             </p>
@@ -582,7 +581,7 @@ function Contact() {
     <section id="contact" style={{ background: T.bgWhite, borderTop: `1px solid ${T.border}` }}>
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px" }}>
         <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Get In Touch</p>
-        <h2 style={{ color: T.primaryDark, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: "44px" }}>Contact</h2>
+        <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: "44px" }}>Contact</h2>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px" }}>
           {/* Primary phone card */}
@@ -741,9 +740,8 @@ function Footer() {
           </div>
         </div>
 
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "20px", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: "8px" }}>
+        <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "20px" }}>
           <p style={{ color: "rgba(255,255,255,0.4)", fontSize: "12px", margin: 0 }}>© {new Date().getFullYear()} EPO Commercials · All rights reserved · <a href="https://www.epocommercials.ie" style={{ color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>www.epocommercials.ie</a></p>
-          {import.meta.env.DEV && <a href="#admin" style={{ color: "rgba(255,255,255,0.25)", fontSize: "11px", textDecoration: "none" }}>Admin</a>}
         </div>
       </div>
     </footer>
@@ -770,7 +768,7 @@ function NotFound() {
             404
           </div>
 
-          <h1 style={{ color: T.primaryDark, fontSize: "clamp(20px, 4vw, 28px)", fontWeight: 800, marginBottom: "12px", marginTop: 0 }}>
+          <h1 style={{ color: T.textMain, fontSize: "clamp(20px, 4vw, 28px)", fontWeight: 800, marginBottom: "12px", marginTop: 0 }}>
             Page Not Found
           </h1>
 
@@ -829,11 +827,11 @@ function ScrollToFooterBtn() {
       title="Scroll to footer"
       style={{
         position: "fixed",
-        bottom: "24px",
-        right: "24px",
+        bottom: "20px",
+        right: "20px",
         zIndex: 200,
-        width: "48px",
-        height: "48px",
+        width: "40px",
+        height: "40px",
         borderRadius: "50%",
         border: `2px solid ${hov ? T.primaryDark : T.primary}`,
         background: hov ? T.primary : T.bgWhite,
@@ -850,7 +848,7 @@ function ScrollToFooterBtn() {
         animation: visible ? "scrollBounce 2s ease-in-out infinite" : "none",
       }}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="6 9 12 15 18 9" />
       </svg>
     </button>
@@ -859,9 +857,9 @@ function ScrollToFooterBtn() {
 
 function Site() {
   return (
-    <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: T.fontFamily }}>
+    <>
       <Header />
-      <main style={{ flex: 1 }}>
+      <main >
         <Hero />
         <About />
         <Services />
@@ -873,7 +871,7 @@ function Site() {
       </main>
       <Footer />
       <ScrollToFooterBtn />
-    </div>
+    </>
   );
 }
 
