@@ -17,7 +17,7 @@ export default function Contact() {
             </div>
             <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "6px" }}>Phone (Primary)</p>
             <a href={`tel:${epoSettings.phone}`} style={{ color: "#fff", fontWeight: 800, fontSize: "20px", textDecoration: "none", display: "block", marginBottom: "4px" }}>{epoSettings.phone}</a>
-            <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "12px", margin: 0 }}>24/7 for breakdown · all bookings by phone</p>
+            <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "12px", margin: 0 }}>24/7 for <span style={{ color: "#F87171", fontWeight: 700 }}>breakdown</span> · all bookings by phone</p>
           </div>
 
           {/* Secondary phone */}
