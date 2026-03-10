@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 – EPO Commercials</title>
+  <script>
+    // GitHub Pages SPA redirect: preserve the path so the React app
+    // can handle it and show the NotFound component.
+    var path = window.location.pathname;
+    var search = window.location.search;
+    var hash = window.location.hash;
+    var redirectUrl = window.location.origin + '/?p=' + encodeURIComponent(path + search) + hash;
+    window.location.replace(redirectUrl);
+  </script>
+</head>
+<body></body>
+</html>
