@@ -23,43 +23,43 @@ export default function Contact() {
           {/* Secondary phone */}
           {epoSettings.phoneAlt && (
             <div style={{ background: T.bg, border: `1.5px solid ${T.borderBlue}`, borderRadius: T.radiusMd, padding: "28px" }}>
-              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent, marginBottom: "16px" }}>
                 <IcoPhone />
               </div>
-              <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Phone (Alternative)</p>
-              <a href={`tel:${epoSettings.phoneAlt}`} style={{ color: T.primary, fontWeight: 800, fontSize: "19px", textDecoration: "none" }}>{epoSettings.phoneAlt}</a>
+              <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Phone (Alternative)</p>
+              <a href={`tel:${epoSettings.phoneAlt}`} style={{ color: T.accent, fontWeight: 800, fontSize: "19px", textDecoration: "none" }}>{epoSettings.phoneAlt}</a>
             </div>
           )}
 
           {/* Accounts phone */}
           {epoSettings.phoneAccounts && (
             <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
-              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent, marginBottom: "16px" }}>
                 <IcoPhone />
               </div>
-              <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Accounts</p>
-              <a href={`tel:${epoSettings.phoneAccounts}`} style={{ color: T.primary, fontWeight: 800, fontSize: "19px", textDecoration: "none" }}>{epoSettings.phoneAccounts}</a>
+              <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Accounts</p>
+              <a href={`tel:${epoSettings.phoneAccounts}`} style={{ color: T.accent, fontWeight: 800, fontSize: "19px", textDecoration: "none" }}>{epoSettings.phoneAccounts}</a>
             </div>
           )}
 
           {/* Location */}
           <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
-            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent, marginBottom: "16px" }}>
               <IcoMapPin />
             </div>
-            <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Location</p>
+            <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Location</p>
             <p style={{ color: T.textMain, fontWeight: 600, fontSize: "15px", margin: 0 }}>{epoSettings.address}</p>
           </div>
 
           {/* Hours summary */}
           <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
-            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent, marginBottom: "16px" }}>
               <IcoClock />
             </div>
-            <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "12px" }}>Opening Hours</p>
+            <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "12px" }}>Opening Hours</p>
             <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "6px" }}>
               {workingHours.map((h) => (
-                <li key={h.label} style={{ display: "flex", justifyContent: "space-between", color: h.is247 ? T.primary : T.textSub, fontSize: "13px", fontWeight: h.is247 ? 700 : 400 }}>
+                <li key={h.label} style={{ display: "flex", justifyContent: "space-between", color: h.is247 ? T.accent : T.textSub, fontSize: "13px", fontWeight: h.is247 ? 700 : 400 }}>
                   <span>{h.label}</span><span>{h.hours}</span>
                 </li>
               ))}
@@ -68,32 +68,32 @@ export default function Contact() {
 
           {/* General email */}
           <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
-            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+            <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent, marginBottom: "16px" }}>
               <IcoMail />
             </div>
-            <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>General Enquiries</p>
-            <a href={`mailto:${epoSettings.email}`} style={{ color: T.primary, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.email}</a>
+            <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>General Enquiries</p>
+            <a href={`mailto:${epoSettings.email}`} style={{ color: T.accent, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.email}</a>
           </div>
 
           {/* Parts email */}
           {epoSettings.emailParts && (
             <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
-              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent, marginBottom: "16px" }}>
                 <IcoMail />
               </div>
-              <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Parts Enquiries</p>
-              <a href={`mailto:${epoSettings.emailParts}`} style={{ color: T.primary, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.emailParts}</a>
+              <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Parts Enquiries</p>
+              <a href={`mailto:${epoSettings.emailParts}`} style={{ color: T.accent, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.emailParts}</a>
             </div>
           )}
 
           {/* Accounts email */}
           {epoSettings.emailAccounts && (
             <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
-              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.primary, marginBottom: "16px" }}>
+              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent, marginBottom: "16px" }}>
                 <IcoMail />
               </div>
-              <p style={{ color: T.textMuted, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Accounts</p>
-              <a href={`mailto:${epoSettings.emailAccounts}`} style={{ color: T.primary, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.emailAccounts}</a>
+              <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Accounts</p>
+              <a href={`mailto:${epoSettings.emailAccounts}`} style={{ color: T.accent, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.emailAccounts}</a>
             </div>
           )}
         </div>

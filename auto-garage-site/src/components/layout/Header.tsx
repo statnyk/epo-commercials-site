@@ -39,7 +39,7 @@ export default function Header() {
           <nav style={{ display: "flex", alignItems: "center", gap: "4px" }}>
             {navLinks.map((l) => <NavLink key={l.href} href={l.href} label={l.label} />)}
             <div style={{ marginLeft: "12px", display: "flex", gap: "8px", alignItems: "center", paddingLeft: "16px", borderLeft: `1px solid ${T.border}` }}>
-              <a href={`tel:${epoSettings.phone}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: T.primary, fontWeight: 700, fontSize: "13px", textDecoration: "none" }}>
+              <a href={`tel:${epoSettings.phone}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: T.accent, fontWeight: 700, fontSize: "13px", textDecoration: "none" }}>
                 <IcoPhone />{epoSettings.phone}
               </a>
               <BtnPrimary href={`tel:${epoSettings.phone}`} size="sm">Call Now</BtnPrimary>
@@ -50,7 +50,7 @@ export default function Header() {
         {/* Mobile hamburger */}
         {!isDesktop && (
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <a href={`tel:${epoSettings.phone}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: T.primary, fontWeight: 700, fontSize: "13px", textDecoration: "none" }}>
+            <a href={`tel:${epoSettings.phone}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: T.accent, fontWeight: 700, fontSize: "13px", textDecoration: "none" }}>
               <IcoPhone />
             </a>
             <button onClick={() => setOpen((v) => !v)} style={{ background: "none", border: `1px solid ${T.border}`, cursor: "pointer", color: T.textSub, padding: "6px 8px", display: "flex", borderRadius: "6px" }}>

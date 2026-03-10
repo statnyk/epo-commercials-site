@@ -7,7 +7,7 @@ export default function BtnOutline({ href, children, size = "md" }: { href: stri
   const minW = size === "lg" ? "240px" : undefined;
   const [hov, setHov] = useState(false);
   return (
-    <a href={href} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px", border: `2px solid ${hov ? T.primaryDark : T.primary}`, color: hov ? "#fff" : T.primary, background: hov ? T.primary : "transparent", fontWeight: 700, fontSize: fs, padding: pad, borderRadius: T.radius, textDecoration: "none", transition: "all 0.18s", minWidth: minW, boxSizing: "border-box" }} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
+    <a href={href} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px", border: `2px solid ${hov ? T.primary : T.accent}`, color: hov ? "#fff" : T.accent, background: hov ? T.primary : "transparent", fontWeight: 700, fontSize: fs, padding: pad, borderRadius: T.radius, textDecoration: "none", transition: "all 0.18s", minWidth: minW, boxSizing: "border-box" }} onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}>
       {children}
     </a>
   );

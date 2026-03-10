@@ -30,7 +30,7 @@ function PartCard({ p }: { p: Part }) {
         <h3 style={{ color: T.textMain, fontWeight: 700, fontSize: "14px", lineHeight: 1.3, margin: 0 }}>{p.name}</h3>
         <div>
           {p.price != null ? (
-            <span style={{ color: T.primary, fontWeight: 800, fontSize: "20px" }}>€{p.price}</span>
+            <span style={{ color: T.accent, fontWeight: 800, fontSize: "20px" }}>€{p.price}</span>
           ) : (
             <span style={{ color: T.textMuted, fontSize: "13px" }}>Price on request</span>
           )}
@@ -83,8 +83,8 @@ export default function Parts({ limit, showViewMore }: { limit?: number; showVie
                 justifyContent: "center",
                 padding: "11px 26px",
                 borderRadius: T.radius,
-                border: `1.5px solid ${T.primary}`,
-                color: T.primary,
+                border: `1.5px solid ${T.accent}`,
+                color: T.accent,
                 fontWeight: 700,
                 fontSize: "14px",
                 textDecoration: "none",
@@ -102,7 +102,7 @@ export default function Parts({ limit, showViewMore }: { limit?: number; showVie
             <p style={{ color: T.textMain, fontSize: "15px", fontWeight: 700, margin: "0 0 2px" }}>Can't find what you need?</p>
             <p style={{ color: T.textSub, fontSize: "13px", margin: 0 }}>Send a parts enquiry by email and we'll get back to you.</p>
           </div>
-          <a href={`mailto:${epoSettings.emailParts ?? epoSettings.email}`} style={{ display: "inline-flex", alignItems: "center", gap: "7px", border: `2px solid ${T.primary}`, color: T.primary, fontWeight: 700, fontSize: "13px", padding: "10px 20px", borderRadius: T.radius, textDecoration: "none" }}>
+          <a href={`mailto:${epoSettings.emailParts ?? epoSettings.email}`} style={{ display: "inline-flex", alignItems: "center", gap: "7px", border: `2px solid ${T.accent}`, color: T.accent, fontWeight: 700, fontSize: "13px", padding: "10px 20px", borderRadius: T.radius, textDecoration: "none" }}>
             <IcoMail /> {epoSettings.emailParts ?? epoSettings.email}
           </a>
         </div>

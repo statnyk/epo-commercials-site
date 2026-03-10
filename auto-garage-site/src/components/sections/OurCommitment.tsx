@@ -12,7 +12,7 @@ export default function OurCommitment() {
           <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "16px", lineHeight: 1.85, margin: "0 0 20px" }}>
             At EPO Commercials, we are committed to delivering professional workmanship, transparent communication, reliable service, and long-term fleet support.
           </p>
-          <p style={{ color: T.primary, fontSize: "17px", fontWeight: 700, lineHeight: 1.6, margin: 0 }}>
+          <p style={{ color: T.accent, fontSize: "17px", fontWeight: 700, lineHeight: 1.6, margin: 0 }}>
             We do not just repair vehicles — we keep transport businesses moving.
           </p>
         </div>
