@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { fetchParts, addPart, updatePart, deletePart, uploadPartImage } from "./cms/epoData";
-import type { Part } from "./cms/epoData";
-import { supabase } from "./lib/supabase";
-import { T } from "./theme";
-import logoInverse from "./assets/logo/epo_2.svg";
+import { fetchParts, addPart, updatePart, deletePart, uploadPartImage } from "../cms/epoData.ts";
+import type { Part } from "../cms/epoData.ts";
+import { supabase } from "../lib/supabase.ts";
+import { T } from "../theme.ts";
+import logoInverse from "../assets/logo/epo_2.svg";
 
 const C = {
   bg:        T.bg,

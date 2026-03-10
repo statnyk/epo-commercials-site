@@ -1,0 +1,14 @@
+export { default as IcoPhone } from "./Phone.tsx";
+export { default as IcoMenu } from "./Menu.tsx";
+export { default as IcoX } from "./Close.tsx";
+export { default as IcoCheck } from "./Check.tsx";
+export { default as IcoMapPin } from "./MapPin.tsx";
+export { default as IcoMail } from "./Mail.tsx";
+export { default as IcoClock } from "./Clock.tsx";
+export { default as IcoTruck } from "./Truck.tsx";
+export { default as IcoClip } from "./Clip.tsx";
+export { default as IcoCpu } from "./Cpu.tsx";
+export { default as IcoZap } from "./Zap.tsx";
+export { default as IcoPkg } from "./Package.tsx";
+export { default as IcoGauge } from "./Gauge.tsx";
+export { svcIconMap, svcColorMap } from "./svcMaps.ts";
