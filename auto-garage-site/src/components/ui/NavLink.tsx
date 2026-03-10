@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { T } from "../../theme.ts";
 
 export default function NavLink({ href, label }: { href: string; label: string }) {
   const [hov, setHov] = useState(false);
