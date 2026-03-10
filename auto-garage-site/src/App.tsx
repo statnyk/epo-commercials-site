@@ -313,28 +313,7 @@ function Hero() {
         </div>
       </div>
 
-      {/* Scroll-down button */}
-      <div style={{ display: "flex", justifyContent: "center", paddingBottom: "28px", marginTop: "-8px" }}>
-        <ScrollDownBtn />
-      </div>
     </section>
-  );
-}
-
-function ScrollDownBtn() {
-  const [hov, setHov] = useState(false);
-  return (
-    <button
-      onClick={() => document.querySelector("footer")?.scrollIntoView({ behavior: "smooth" })}
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      title="Scroll to bottom"
-      style={{ width: "44px", height: "44px", borderRadius: "50%", border: `2px solid ${hov ? T.primary : T.border}`, background: hov ? T.primaryLight : T.bgWhite, color: hov ? T.primary : T.textMuted, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", transition: "all 0.2s", boxShadow: hov ? T.shadowMd : T.shadow, animation: "scrollBounce 2s ease-in-out infinite" }}
-    >
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="6 9 12 15 18 9" />
-      </svg>
-    </button>
   );
 }
 
@@ -832,6 +811,52 @@ function NotFound() {
 }
 
 /* ─── Root ───────────────────────────────────────────────────────── */
+function ScrollToFooterBtn() {
+  const [visible, setVisible] = useState(false);
+  const [hov, setHov] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setVisible(window.scrollY > 80);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  return (
+    <button
+      onClick={() => document.querySelector("footer")?.scrollIntoView({ behavior: "smooth" })}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      title="Scroll to footer"
+      style={{
+        position: "fixed",
+        bottom: "24px",
+        right: "24px",
+        zIndex: 200,
+        width: "48px",
+        height: "48px",
+        borderRadius: "50%",
+        border: `2px solid ${hov ? T.primaryDark : T.primary}`,
+        background: hov ? T.primary : T.bgWhite,
+        color: hov ? "#fff" : T.primary,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        boxShadow: T.shadowMd,
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(16px)",
+        pointerEvents: visible ? "auto" : "none",
+        transition: "opacity 0.3s ease, transform 0.3s ease, background 0.2s, color 0.2s, border-color 0.2s",
+        animation: visible ? "scrollBounce 2s ease-in-out infinite" : "none",
+      }}
+    >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </button>
+  );
+}
+
 function Site() {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: T.fontFamily }}>
@@ -847,6 +872,7 @@ function Site() {
         <Contact />
       </main>
       <Footer />
+      <ScrollToFooterBtn />
     </div>
   );
 }
