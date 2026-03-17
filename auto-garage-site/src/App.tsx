@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import Site from "./pages/Site.tsx";
 import PartsPage from "./pages/PartsPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import AdminPanel from "./admin/AdminPanel.tsx";
+import CookieConsent from "./components/ui/CookieConsent.tsx";
 
 export default function App() {
   const [route, setRoute] = useState(() => {
@@ -30,10 +32,16 @@ export default function App() {
   const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   const path = route.startsWith(base) ? route.slice(base.length) || "/" : route;
 
-  if (path === "/parts") return <PartsPage />;
+  let page;
+  if (path === "/parts") page = <PartsPage />;
+  else if (path === "/privacy") page = <PrivacyPolicy />;
+  else if (!path.startsWith("#") && !["/", "/index.html", ""].includes(path)) page = <NotFound />;
+  else page = <Site />;
 
-  const knownPaths = ["/", "/index.html", ""];
-  if (!path.startsWith("#") && !knownPaths.includes(path)) return <NotFound />;
-
-  return <Site />;
+  return (
+    <>
+      {page}
+      <CookieConsent />
+    </>
+  );
 }

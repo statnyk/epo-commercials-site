@@ -67,7 +67,7 @@ export default function Footer() {
         </div>
 
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "20px" }}>
-          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "13px", margin: 0 }}>© {new Date().getFullYear()} EPO Commercials · All rights reserved · <a href="https://www.epocommercials.ie" style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>www.epocommercials.ie</a></p>
+          <p style={{ color: "rgba(255,255,255,0.75)", fontSize: "13px", margin: 0 }}>© {new Date().getFullYear()} EPO Commercials · All rights reserved · <a href="https://www.epocommercials.ie" style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>www.epocommercials.ie</a> · <a href="/privacy" style={{ color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Privacy Policy</a></p>
         </div>
       </div>
     </footer>
