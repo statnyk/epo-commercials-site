@@ -53,7 +53,7 @@ export default function Header() {
             <a href={`tel:${epoSettings.phone}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: T.accent, fontWeight: 700, fontSize: "13px", textDecoration: "none" }}>
               <IcoPhone />
             </a>
-            <button onClick={() => setOpen((v) => !v)} style={{ background: "none", border: `1px solid ${T.border}`, cursor: "pointer", color: T.textSub, padding: "6px 8px", display: "flex", borderRadius: "6px" }}>
+            <button onClick={() => setOpen((v) => !v)} aria-label={open ? "Close menu" : "Open menu"} style={{ background: "none", border: `1px solid ${T.border}`, cursor: "pointer", color: T.textSub, padding: "6px 8px", display: "flex", borderRadius: "6px" }}>
               {open ? <IcoX /> : <IcoMenu />}
             </button>
           </div>

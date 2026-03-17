@@ -18,7 +18,7 @@ function PartCard({ p }: { p: Part }) {
     <article onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)} style={{ background: T.bgWhite, border: `1.5px solid ${hov ? T.primary : T.border}`, borderRadius: T.radiusMd, overflow: "hidden", display: "flex", flexDirection: "column", boxShadow: hov ? T.shadowHover : T.shadow, transition: "all 0.2s" }}>
       <div style={{ height: "160px", background: T.bg, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column", gap: "8px", overflow: "hidden" }}>
         {p.image_url ? (
-          <img src={p.image_url} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <img src={p.image_url} alt={p.name} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         ) : (
           <>
             <IcoPkg />

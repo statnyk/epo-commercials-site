@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import AdminPanel from "./admin/AdminPanel.tsx";
 import CookieConsent from "./components/ui/CookieConsent.tsx";
+import ErrorBoundary from "./components/ErrorBoundary.tsx";
 
 export default function App() {
   const [route, setRoute] = useState(() => {
@@ -39,9 +40,9 @@ export default function App() {
   else page = <Site />;
 
   return (
-    <>
+    <ErrorBoundary>
       {page}
       <CookieConsent />
-    </>
+    </ErrorBoundary>
   );
 }

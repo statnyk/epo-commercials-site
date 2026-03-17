@@ -39,7 +39,7 @@ export default function About() {
         </div>
 
         <div style={{ borderRadius: T.radiusMd, overflow: "hidden", boxShadow: T.shadow }}>
-          <img src={mechImg} alt="EPO Commercials team jacket" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          <img src={mechImg} alt="EPO Commercials team jacket" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </div>
       </div>
     </section>
