@@ -10,8 +10,8 @@ function ServiceCard({ s }: { s: Service }) {
   const Icon = svcIconMap[s.icon] ?? IcoTruck;
   const color = svcColorMap[s.icon] ?? T.primary;
   const isRed = s.highlight;
-  const borderColor = hov ? (isRed ? T.heroBadgeRed : T.primary) : (isRed ? "rgba(239,68,68,0.5)" : T.border);
-  const iconBg = hov ? (isRed ? "rgba(239,68,68,0.25)" : T.primaryLight) : (isRed ? "rgba(239,68,68,0.18)" : T.bg);
+  const borderColor = hov ? (isRed ? T.heroBadgeRed : T.primary) : (isRed ? "rgba(255,107,107,0.5)" : T.border);
+  const iconBg = hov ? (isRed ? "rgba(255,107,107,0.25)" : T.primaryLight) : (isRed ? "rgba(255,107,107,0.18)" : T.bg);
   const iconColor = hov ? (isRed ? T.heroBadgeRed : T.primary) : (isRed ? T.heroBadgeRed : color);
   const bulletBg = hov ? (isRed ? T.heroBadgeRed : T.primary) : (isRed ? T.heroBadgeRed : color);
   return (
@@ -21,7 +21,7 @@ function ServiceCard({ s }: { s: Service }) {
       </div>
       <div>
         <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px", flexWrap: "wrap" }}>
-          <h3 style={{ color: isRed ? T.heroBadgeRed : T.textMain, fontWeight: 700, fontSize: "15px", margin: 0 }}>{s.title}</h3>
+          <h3 style={{ color: isRed ? T.heroBadgeRed : T.textMain, fontWeight: 900, fontSize: "19px", margin: 0 }}>{s.title}</h3>
           {s.highlight && (
             <span style={{ background: T.heroBadgeRed, color: "#fff", fontSize: "10px", fontWeight: 700, padding: "2px 8px", borderRadius: "100px" }}>24/7</span>
           )}
@@ -33,7 +33,7 @@ function ServiceCard({ s }: { s: Service }) {
                 <span style={{ flexShrink: 0, marginTop: "3px", width: "16px", height: "16px", borderRadius: "50%", background: bulletBg, display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#fff", transition: "background 0.2s" }}>
                   <IcoCheck />
                 </span>
-                <span style={{ color: T.textMain, fontSize: "14px", lineHeight: 1.6 }}>{b}</span>
+                <span style={{ color: T.textMain, fontSize: "15px", lineHeight: 1.6, fontWeight: 700 }}>{b}</span>
               </li>
             ))}
           </ul>

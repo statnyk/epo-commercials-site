@@ -17,7 +17,7 @@ export const T = {
   bgDark:       "#002F5E",
 
   /* UI – red for 24/7 badges, contact phrase, service highlight */
-  heroBadgeRed: "#ef4444",
+  heroBadgeRed: "#ff6b6b",
   border:       "rgba(255,255,255,0.08)",
   borderBlue:   "rgba(0,82,163,0.35)",
   shadow:       "0 2px 12px rgba(0,0,0,0.25)",

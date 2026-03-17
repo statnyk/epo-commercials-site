@@ -3,7 +3,7 @@ import { epoSettings } from "../../cms/epoData.ts";
 import BtnPrimary from "../ui/BtnPrimary.tsx";
 import BtnOutline from "../ui/BtnOutline.tsx";
 import { IcoPhone } from "../../assets/icons/index.ts";
-import heroImg from "../../assets/images/2026-03-02 08.43.04.jpg";
+import heroImg from "../../assets/images/epo-van.jpg";
 
 export default function Hero() {
   return (

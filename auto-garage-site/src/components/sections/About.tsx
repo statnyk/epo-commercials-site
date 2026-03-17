@@ -1,8 +1,7 @@
 import { T, container } from "../../theme.ts";
 import { epoSettings } from "../../cms/epoData.ts";
 import { IcoCheck, IcoMapPin } from "../../assets/icons/index.ts";
-import shopImg from "../../assets/images/2026-03-02 08.43.36.jpg";
-import mechImg from "../../assets/images/2026-03-02 08.43.52.jpg";
+import mechImg from "../../assets/images/epo-jacket.png";
 
 export default function About() {
   const bullets = [
@@ -39,13 +38,8 @@ export default function About() {
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          <div style={{ borderRadius: T.radiusMd, overflow: "hidden", boxShadow: T.shadow, aspectRatio: "16/9" }}>
-            <img src={shopImg} alt="Heavy vehicle engine repair" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
-          <div style={{ borderRadius: T.radiusMd, overflow: "hidden", boxShadow: T.shadow, aspectRatio: "16/9" }}>
-            <img src={mechImg} alt="Professional mechanic at work" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-          </div>
+        <div style={{ borderRadius: T.radiusMd, overflow: "hidden", boxShadow: T.shadow }}>
+          <img src={mechImg} alt="EPO Commercials team jacket" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </div>
       </div>
     </section>

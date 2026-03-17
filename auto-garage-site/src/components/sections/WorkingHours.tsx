@@ -17,7 +17,7 @@ export default function WorkingHours() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {workingHours.map((h) => (
-            <div key={h.label} style={{ background: h.is247 ? "rgba(239,68,68,0.15)" : T.bg, border: h.is247 ? `1.5px solid ${T.heroBadgeRed}` : `1.5px solid ${T.border}`, borderRadius: T.radius, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
+            <div key={h.label} style={{ background: h.is247 ? "rgba(255,107,107,0.15)" : T.bg, border: h.is247 ? `1.5px solid ${T.heroBadgeRed}` : `1.5px solid ${T.border}`, borderRadius: T.radius, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "16px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <span style={{ color: h.is247 ? T.heroBadgeRed : T.textMuted }}><IcoClock /></span>
                 <span style={{ color: h.is247 ? T.heroBadgeRed : T.textMain, fontWeight: h.is247 ? 700 : 500, fontSize: "14px" }}>{h.label}</span>
