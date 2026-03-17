@@ -1,7 +1,7 @@
 import { T, container } from "../../theme.ts";
 import { epoSettings } from "../../cms/epoData.ts";
 import { IcoCheck, IcoMapPin } from "../../assets/icons/index.ts";
-import mechImg from "../../assets/images/epo-jacket.png";
+import mechImg from "../../assets/images/epo-jacket.jpg";
 
 export default function About() {
   const bullets = [
