@@ -3,6 +3,7 @@ import Site from "./pages/Site.tsx";
 import PartsPage from "./pages/PartsPage.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
+import ContactPage from "./pages/ContactPage.tsx";
 import AdminPanel from "./admin/AdminPanel.tsx";
 import CookieConsent from "./components/ui/CookieConsent.tsx";
 import ErrorBoundary from "./components/ErrorBoundary.tsx";
@@ -35,6 +36,7 @@ export default function App() {
 
   let page;
   if (path === "/parts") page = <PartsPage />;
+  else if (path === "/contact") page = <ContactPage />;
   else if (path === "/privacy") page = <PrivacyPolicy />;
   else if (!path.startsWith("#") && !["/", "/index.html", ""].includes(path)) page = <NotFound />;
   else page = <Site />;

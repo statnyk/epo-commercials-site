@@ -5,6 +5,16 @@ import { supabase } from "../lib/supabase.ts";
 import { T } from "../theme.ts";
 import logoInverse from "../assets/logo/epo_2.svg";
 
+interface ContactMessage {
+  id: string;
+  name: string;
+  email: string;
+  phone: string | null;
+  message: string;
+  read: boolean;
+  created_at: string;
+}
+
 const C = {
   bg:        T.bg,
   card:      T.bgWhite,
@@ -56,6 +66,11 @@ export default function AdminPanel() {
   const [editName, setEditName] = useState("");
   const [editPrice, setEditPrice] = useState("");
 
+  const [tab, setTab] = useState<"parts" | "messages">("parts");
+  const [messages, setMessages] = useState<ContactMessage[]>([]);
+  const [msgsLoading, setMsgsLoading] = useState(false);
+  const [expandedMsg, setExpandedMsg] = useState<string | null>(null);
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setAuthed(!!session);
@@ -78,9 +93,29 @@ export default function AdminPanel() {
     }
   }, []);
 
+  const loadMessages = useCallback(async () => {
+    setMsgsLoading(true);
+    try {
+      const { data, error } = await supabase
+        .from("contact_messages")
+        .select("*")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      setMessages(data ?? []);
+    } catch {
+      setErrorMsg("Failed to load messages.");
+    } finally {
+      setMsgsLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     if (authed) loadAllParts();
   }, [authed, loadAllParts]);
+
+  useEffect(() => {
+    if (authed && tab === "messages") loadMessages();
+  }, [authed, tab, loadMessages]);
 
   async function handleLogin() {
     setLoginErr("");
@@ -185,6 +220,19 @@ export default function AdminPanel() {
     }
   }
 
+  async function toggleRead(msg: ContactMessage) {
+    await supabase.from("contact_messages").update({ read: !msg.read }).eq("id", msg.id);
+    setMessages((prev) => prev.map((m) => m.id === msg.id ? { ...m, read: !m.read } : m));
+  }
+
+  async function deleteMessage(id: string) {
+    if (!confirm("Delete this message?")) return;
+    await supabase.from("contact_messages").delete().eq("id", id);
+    setMessages((prev) => prev.filter((m) => m.id !== id));
+  }
+
+  const unreadCount = messages.filter((m) => !m.read).length;
+
   if (authLoading) {
     return (
       <div style={{ minHeight: "100vh", background: C.bg, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: T.fontFamily }}>
@@ -252,7 +300,7 @@ export default function AdminPanel() {
           <span style={{ background: T.primary, borderRadius: "6px", width: "28px", height: "28px", display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "4px" }}>
             <img src={logoInverse} alt="EPO Commercials logo" style={{ height: "100%", width: "auto", display: "block" }} />
           </span>
-          <span style={{ color: "#fff", fontWeight: 700, fontSize: "14px" }}>EPO Admin · Parts</span>
+          <span style={{ color: "#fff", fontWeight: 700, fontSize: "14px" }}>EPO Admin</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <a href="#" onClick={(e) => { e.preventDefault(); globalThis.location.hash = ""; }} style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", textDecoration: "none" }}>← View site</a>
@@ -262,6 +310,36 @@ export default function AdminPanel() {
         </div>
       </header>
 
+      {/* Tabs */}
+      <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "24px 24px 0", display: "flex", gap: "4px" }}>
+        {(["parts", "messages"] as const).map((t) => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            style={{
+              background: tab === t ? T.bgWhite : "transparent",
+              border: tab === t ? `1px solid ${T.border}` : "1px solid transparent",
+              borderBottom: tab === t ? `1px solid ${T.bgWhite}` : `1px solid ${T.border}`,
+              borderRadius: "8px 8px 0 0",
+              padding: "10px 20px",
+              color: tab === t ? T.accent : C.muted,
+              fontWeight: 600,
+              fontSize: "13px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
+          >
+            {t === "parts" ? "Parts" : "Messages"}
+            {t === "messages" && unreadCount > 0 && (
+              <span style={{ background: C.red, color: "#fff", fontSize: "11px", fontWeight: 700, padding: "1px 7px", borderRadius: "10px" }}>{unreadCount}</span>
+            )}
+          </button>
+        ))}
+      </div>
+
+      {tab === "parts" && (
       <div style={{ maxWidth: "1000px", margin: "0 auto", padding: "32px 24px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "28px", alignItems: "start" }}>
         {/* Add part form */}
         <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "14px", padding: "28px" }}>
@@ -404,6 +482,94 @@ export default function AdminPanel() {
           )}
         </div>
       </div>
+      )}
+
+      {tab === "messages" && (
+      <div style={{ maxWidth: "800px", margin: "0 auto", padding: "32px 24px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+          <h2 style={{ color: T.accent, fontWeight: 700, fontSize: "16px", margin: 0 }}>
+            Contact Messages <span style={{ color: C.muted, fontSize: "14px", fontWeight: 400 }}>({messages.length})</span>
+          </h2>
+          <button onClick={loadMessages} style={{ background: T.primaryLight, border: `1px solid ${T.borderBlue}`, color: T.accent, fontWeight: 600, fontSize: "12px", padding: "5px 12px", borderRadius: "6px", cursor: "pointer" }}>
+            Refresh
+          </button>
+        </div>
+
+        {msgsLoading ? (
+          <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "12px", padding: "32px", textAlign: "center", color: C.muted, fontSize: "14px" }}>
+            Loading messages...
+          </div>
+        ) : messages.length === 0 ? (
+          <div style={{ background: C.card, border: `1px solid ${C.cardBorder}`, borderRadius: "12px", padding: "32px", textAlign: "center", color: C.muted, fontSize: "14px" }}>
+            No messages yet.
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                style={{
+                  background: C.card,
+                  border: `1.5px solid ${msg.read ? C.cardBorder : T.borderBlue}`,
+                  borderRadius: "12px",
+                  overflow: "hidden",
+                  transition: "border-color 0.15s",
+                }}
+              >
+                {/* Message header row */}
+                <div
+                  onClick={() => setExpandedMsg(expandedMsg === msg.id ? null : msg.id)}
+                  style={{ padding: "14px 16px", cursor: "pointer", display: "flex", alignItems: "center", gap: "12px" }}
+                >
+                  {/* Unread dot */}
+                  <div style={{ width: "8px", height: "8px", borderRadius: "50%", background: msg.read ? "transparent" : T.accent, flexShrink: 0 }} />
+
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                      <span style={{ color: C.text, fontWeight: msg.read ? 500 : 700, fontSize: "14px" }}>{msg.name}</span>
+                      <span style={{ color: C.muted, fontSize: "12px" }}>{msg.email}</span>
+                      {msg.phone && <span style={{ color: C.muted, fontSize: "12px" }}>· {msg.phone}</span>}
+                    </div>
+                    <p style={{ color: C.mutedLight, fontSize: "13px", margin: "2px 0 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                      {msg.message}
+                    </p>
+                  </div>
+
+                  <span style={{ color: C.muted, fontSize: "11px", flexShrink: 0 }}>
+                    {new Date(msg.created_at).toLocaleDateString("en-IE", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
+                  </span>
+                </div>
+
+                {/* Expanded content */}
+                {expandedMsg === msg.id && (
+                  <div style={{ borderTop: `1px solid ${C.cardBorder}`, padding: "16px 16px 16px 36px" }}>
+                    <p style={{ color: C.text, fontSize: "14px", lineHeight: 1.7, whiteSpace: "pre-wrap", margin: "0 0 16px" }}>{msg.message}</p>
+
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", alignItems: "center" }}>
+                      <a href={`mailto:${msg.email}`} style={{ background: T.primary, color: "#fff", fontWeight: 600, fontSize: "12px", padding: "6px 14px", borderRadius: "6px", textDecoration: "none" }}>
+                        Reply by email
+                      </a>
+                      {msg.phone && (
+                        <a href={`tel:${msg.phone}`} style={{ background: T.primaryLight, border: `1px solid ${T.borderBlue}`, color: T.accent, fontWeight: 600, fontSize: "12px", padding: "6px 14px", borderRadius: "6px", textDecoration: "none" }}>
+                          Call {msg.phone}
+                        </a>
+                      )}
+                      <button onClick={() => toggleRead(msg)} style={{ background: T.bg, border: `1px solid ${T.border}`, color: C.mutedLight, fontWeight: 600, fontSize: "12px", padding: "6px 14px", borderRadius: "6px", cursor: "pointer" }}>
+                        Mark as {msg.read ? "unread" : "read"}
+                      </button>
+                      <button onClick={() => deleteMessage(msg.id)} style={{ background: "rgba(239,68,68,0.08)", border: "1px solid rgba(239,68,68,0.25)", color: C.red, fontWeight: 600, fontSize: "12px", padding: "6px 14px", borderRadius: "6px", cursor: "pointer" }}>
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      )}
+
     </div>
   );
 }

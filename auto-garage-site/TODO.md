@@ -1,85 +1,81 @@
 # EPO Commercials - Launch TODO
 
-## 🔴 BLOCKING (Must fix before launch)
+## Morning Tasks (2026-03-19)
 
-- [ ] **Remove .env from Git** — never commit Supabase keys; use Vercel/hosting environment variables instead
-- [ ] **Privacy Policy page** — GDPR requirement for any EU business, add route + footer link
-- [ ] **Terms of Service page** — legal protection for the business
-- [ ] **Cookie Consent banner** — EU cookie law compliance
-- [ ] **Compress epo-jacket.png** — currently 1.2MB, should be <200KB (convert to WebP)
-- [ ] **Verify Supabase RLS policies** — ensure parts table has Row Level Security: public read, authenticated-only write/delete
+### Contact Form Setup (finish what we started)
+1. [ ] Run SQL migration in Supabase dashboard (`vjguqdqafsmhfkqdwmua`) — create `contact_messages` table + RLS policies
+   ```sql
+   create table contact_messages (
+     id uuid default gen_random_uuid() primary key,
+     name text not null,
+     email text not null,
+     phone text,
+     message text not null,
+     read boolean default false,
+     created_at timestamptz default now()
+   );
+   alter table contact_messages enable row level security;
+   create policy "Anyone can submit a message" on contact_messages for insert to anon with check (true);
+   create policy "Authenticated users can read messages" on contact_messages for select to authenticated using (true);
+   create policy "Authenticated users can update messages" on contact_messages for update to authenticated using (true);
+   create policy "Authenticated users can delete messages" on contact_messages for delete to authenticated using (true);
+   ```
+2. [ ] Deploy edge function:
+   ```bash
+   cd ~/Documents/Personal/epo-commercials-site/auto-garage-site
+   npx supabase login
+   npx supabase functions deploy send-contact-email --project-ref vjguqdqafsmhfkqdwmua --no-verify-jwt
+   ```
+3. [ ] Set Supabase secrets:
+   ```bash
+   npx supabase secrets set RESEND_API_KEY=your_key NOTIFY_EMAIL=aurel.statnyk@gmail.com --project-ref vjguqdqafsmhfkqdwmua
+   ```
+4. [ ] Test contact form — submit a message, check email arrives, check admin panel Messages tab
 
-## 🟡 IMPORTANT (Fix before or shortly after launch)
+### Cleanup wrong project
+5. [ ] Remove `contact_messages` table + edge function from `ewigdchaasqtgtauceva` (wrong project)
 
-### SEO
-- [ ] Add `robots.txt` to public/
-- [ ] Add `sitemap.xml` (or generate dynamically)
-- [ ] Add `og:image` meta tag (social sharing preview image)
-- [ ] Add `twitter:card` meta tags
-- [ ] Add schema.org `LocalBusiness` JSON-LD structured data
-- [ ] Add canonical URL tag
+---
 
-### Performance
-- [ ] Add `loading="lazy"` to below-fold images
-- [ ] Convert JPG team photos to WebP with fallback
-- [ ] Add `srcset` for responsive image sizes
-- [ ] Remove unused images in `src/assets/parts/`
+## Completed
 
-### Accessibility
-- [ ] Add `aria-label` to mobile menu toggle button
-- [ ] Add skip-to-main-content link
-- [ ] Add `aria-current="page"` for active nav links
+- [x] Favicon (epo_3.svg)
+- [x] Privacy Policy page + footer link
+- [x] Cookie Consent banner
+- [x] Compress epo-jacket.png (1.2MB → 155KB)
+- [x] .env not tracked in Git
+- [x] robots.txt + sitemap.xml
+- [x] og:image + twitter:card meta tags
+- [x] Schema.org LocalBusiness JSON-LD
+- [x] loading="lazy" on below-fold images
+- [x] aria-label on mobile menu button
+- [x] React Error Boundary
+- [x] Removed unused src/assets/parts/
+- [x] Contact form page (/contact) — code done
+- [x] Admin panel Messages tab — code done
+- [x] Edge function for email notifications — code done
+- [x] "Send us a Message" CTA on home page Contact section
 
-### Error Handling
-- [ ] Add React Error Boundary component
-- [ ] Add timeout handling for Supabase API calls
+## Still Remaining
 
-## 🟢 NICE TO HAVE (Post-launch improvements)
+### Blocking
+- [ ] Verify Supabase RLS policies on `parts` table
 
-- [ ] Add Google Analytics 4 (GA4) tracking
-- [ ] Add error tracking (Sentry)
-- [ ] Add PWA manifest.json for "Add to Home Screen"
-- [ ] Add contact form (instead of just mailto: links)
-- [ ] Add conversion tracking for phone call/email clicks
-- [ ] Rate limiting on admin operations
-- [ ] Implement image CDN for auto-optimization
+### Hosting & Domain
+- [ ] Set up Vercel under client's account
+- [ ] Configure DNS at Blacknight → Vercel
+- [ ] Set env vars in Vercel dashboard
+- [ ] Google Search Console + Analytics under client's Gmail
+- [ ] Test production build on mobile
 
-## 🌐 HOSTING & DOMAIN SETUP
+### Nice to Have
+- [ ] Google Analytics 4
+- [ ] PWA manifest
+- [ ] Error tracking (Sentry)
+- [ ] Convert team photos to WebP
+- [ ] Skip-to-main-content link
 
-### Client Accounts Needed
-- [ ] **Blacknight** — client's domain registrar account (for DNS settings)
-- [ ] **Gmail/Google** — client's Google account (for Google Search Console, Analytics)
-- [ ] **Vercel** — create account under client's email OR transfer project after deploy
-- [ ] **Supabase** — ensure project is under client's account/email
-
-### Domain Configuration
-- [ ] Point domain DNS (Blacknight) to Vercel nameservers or add CNAME
-- [ ] Configure `www.epocommercials.ie` → Vercel
-- [ ] Enable SSL/HTTPS (automatic on Vercel)
-- [ ] Set up `epocommercials.ie` redirect to `www` (or vice versa)
-- [ ] Update `og:url` in index.html to final production URL
-
-### Deployment
-- [ ] Set environment variables in Vercel dashboard (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY)
-- [ ] Connect Git repo to Vercel for auto-deploy
-- [ ] Test production build locally (`npm run build && npm run preview`)
-- [ ] Verify all pages work on production URL
-- [ ] Test on mobile (iPhone Safari, Android Chrome)
-
-### Post-Deploy Verification
-- [ ] Submit sitemap to Google Search Console
-- [ ] Test Open Graph tags with Facebook Sharing Debugger
-- [ ] Run Google Lighthouse audit (target 90+ all categories)
-- [ ] Run Google PageSpeed Insights
-- [ ] Test all phone/email links work on mobile
-- [ ] Verify admin login works on production
-- [ ] Verify parts CRUD + image upload works on production
-
-## 📋 CLIENT HANDOVER
-
-- [ ] Document admin panel usage (how to add/edit/delete parts)
-- [ ] Share Vercel dashboard access with client
-- [ ] Share Supabase dashboard access with client
-- [ ] Set up Google Search Console under client's Gmail
-- [ ] Set up Google Analytics under client's Gmail
+### Client Handover
+- [ ] Document admin panel usage (parts + messages)
+- [ ] Share Vercel + Supabase dashboard access
 - [ ] Provide DNS instructions for Blacknight

@@ -7,7 +7,12 @@ export default function Contact() {
     <section id="contact" style={{ background: T.bgWhite, borderTop: `1px solid ${T.border}` }}>
       <div style={{ ...container, paddingTop: "80px", paddingBottom: "80px" }}>
         <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Get In Touch</p>
-        <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", marginBottom: "44px" }}>Contact</h2>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px", marginBottom: "44px" }}>
+          <h2 style={{ color: T.textMain, fontSize: "clamp(1.5rem, 3vw, 2.2rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: 0 }}>Contact</h2>
+          <a href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: T.primary, color: "#fff", fontWeight: 600, fontSize: "13px", padding: "9px 20px", borderRadius: T.radius, textDecoration: "none", boxShadow: T.shadow }}>
+            <IcoMail /> Send us a Message
+          </a>
+        </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px" }}>
           {/* Primary phone card */}
