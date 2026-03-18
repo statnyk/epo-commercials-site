@@ -10,7 +10,7 @@ export default function NotFound() {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: T.fontFamily }}>
       <Header />
-      <main style={{ flex: 1, background: T.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 24px" }}>
+      <main id="main-content" style={{ flex: 1, background: T.bg, display: "flex", alignItems: "center", justifyContent: "center", padding: "80px 24px" }}>
         <div style={{ textAlign: "center", maxWidth: "480px" }}>
           {/* Gauge icon */}
           <div style={{ display: "flex", justifyContent: "center", marginBottom: "28px" }}>

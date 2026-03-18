@@ -7,7 +7,7 @@ export default function PartsPage() {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: T.fontFamily }}>
       <Header />
-      <main style={{ flex: 1 }}>
+      <main id="main-content" style={{ flex: 1 }}>
         <section style={{ background: T.bgWhite, borderBottom: `1px solid ${T.border}` }}>
           <div style={{ ...container, paddingTop: "60px", paddingBottom: "32px" }}>
             <p style={{ color: T.accent, fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>Parts Catalogue</p>

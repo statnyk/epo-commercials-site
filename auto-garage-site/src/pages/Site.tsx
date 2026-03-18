@@ -14,7 +14,7 @@ export default function Site() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main-content">
         <Hero />
         <About />
         <Services />

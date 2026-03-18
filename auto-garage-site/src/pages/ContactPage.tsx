@@ -72,7 +72,7 @@ export default function ContactPage() {
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: T.fontFamily }}>
       <Header />
-      <main style={{ flex: 1 }}>
+      <main id="main-content" style={{ flex: 1 }}>
         {/* Page header */}
         <section style={{ background: T.bgWhite, borderBottom: `1px solid ${T.border}` }}>
           <div style={{ ...container, paddingTop: "60px", paddingBottom: "32px" }}>
