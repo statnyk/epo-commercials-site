@@ -225,10 +225,24 @@ export default function AdminPanel() {
     setMessages((prev) => prev.map((m) => m.id === msg.id ? { ...m, read: !m.read } : m));
   }
 
+  async function markAllRead() {
+    const unreadIds = messages.filter((m) => !m.read).map((m) => m.id);
+    if (unreadIds.length === 0) return;
+    await supabase.from("contact_messages").update({ read: true }).in("id", unreadIds);
+    setMessages((prev) => prev.map((m) => ({ ...m, read: true })));
+  }
+
   async function deleteMessage(id: string) {
     if (!confirm("Delete this message?")) return;
     await supabase.from("contact_messages").delete().eq("id", id);
     setMessages((prev) => prev.filter((m) => m.id !== id));
+  }
+
+  async function clearAllMessages() {
+    if (!confirm("Delete ALL messages? This cannot be undone.")) return;
+    const ids = messages.map((m) => m.id);
+    await supabase.from("contact_messages").delete().in("id", ids);
+    setMessages([]);
   }
 
   const unreadCount = messages.filter((m) => !m.read).length;
@@ -486,13 +500,26 @@ export default function AdminPanel() {
 
       {tab === "messages" && (
       <div style={{ maxWidth: "800px", margin: "0 auto", padding: "32px 24px" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px" }}>
+        {/* Header + bulk actions */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "16px", flexWrap: "wrap", gap: "10px" }}>
           <h2 style={{ color: T.accent, fontWeight: 700, fontSize: "16px", margin: 0 }}>
-            Contact Messages <span style={{ color: C.muted, fontSize: "14px", fontWeight: 400 }}>({messages.length})</span>
+            Contact Messages <span style={{ color: C.muted, fontSize: "14px", fontWeight: 400 }}>({messages.length}{unreadCount > 0 ? ` · ${unreadCount} unread` : ""})</span>
           </h2>
-          <button onClick={loadMessages} style={{ background: T.primaryLight, border: `1px solid ${T.borderBlue}`, color: T.accent, fontWeight: 600, fontSize: "12px", padding: "5px 12px", borderRadius: "6px", cursor: "pointer" }}>
-            Refresh
-          </button>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+            {unreadCount > 0 && (
+              <button onClick={markAllRead} style={{ background: T.primaryLight, border: `1px solid ${T.borderBlue}`, color: T.accent, fontWeight: 600, fontSize: "12px", padding: "5px 12px", borderRadius: "6px", cursor: "pointer" }}>
+                Read all
+              </button>
+            )}
+            {messages.length > 0 && (
+              <button onClick={clearAllMessages} style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.4)", color: C.red, fontWeight: 600, fontSize: "12px", padding: "5px 10px", borderRadius: "6px", cursor: "pointer" }}>
+                Clear all
+              </button>
+            )}
+            <button onClick={loadMessages} style={{ background: T.primaryLight, border: `1px solid ${T.borderBlue}`, color: T.accent, fontWeight: 600, fontSize: "12px", padding: "5px 12px", borderRadius: "6px", cursor: "pointer" }}>
+              Refresh
+            </button>
+          </div>
         </div>
 
         {msgsLoading ? (
