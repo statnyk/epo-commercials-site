@@ -21,7 +21,7 @@ export interface Service {
   id: string;
   title: string;
   description: string;
-  icon: "breakdown" | "cvrt" | "diagnostics" | "electrical" | "bus" | "truck";
+  icon: "breakdown" | "cvrt" | "diagnostics" | "electrical" | "bus" | "truck" | "alignment";
   highlight?: boolean;
   bullets?: string[];
 }
@@ -111,6 +111,13 @@ export const services: Service[] = [
       "Fleet servicing contracts",
       "24/7 emergency roadside breakdown repairs",
     ],
+  },
+  {
+    id: "alignment",
+    title: "Alignment for Buses and HGV",
+    description:
+      "Professional wheel alignment services for buses and heavy goods vehicles. Precision laser alignment to reduce tyre wear, improve fuel efficiency and ensure safe handling.",
+    icon: "alignment",
   },
 ];
 

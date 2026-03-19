@@ -12,6 +12,7 @@ export const svcIconMap: Record<string, () => React.ReactElement> = {
   electrical: IcoZap,
   bus: IcoTruck,
   truck: IcoTruck,
+  alignment: IcoTruck,
 };
 
 export const svcColorMap: Record<string, string> = {
@@ -21,4 +22,5 @@ export const svcColorMap: Record<string, string> = {
   electrical: "#f97316",
   bus: "#10b981",
   truck: "#f59e0b",
+  alignment: "#ef4444",
 };
