@@ -3,6 +3,7 @@ import IcoTruck from "./Truck.tsx";
 import IcoClip from "./Clip.tsx";
 import IcoCpu from "./Cpu.tsx";
 import IcoZap from "./Zap.tsx";
+import IcoCrosshair from "./Crosshair.tsx";
 import { T } from "../../theme.ts";
 
 export const svcIconMap: Record<string, () => React.ReactElement> = {
@@ -12,7 +13,7 @@ export const svcIconMap: Record<string, () => React.ReactElement> = {
   electrical: IcoZap,
   bus: IcoTruck,
   truck: IcoTruck,
-  alignment: IcoTruck,
+  alignment: IcoCrosshair,
 };
 
 export const svcColorMap: Record<string, string> = {

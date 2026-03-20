@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EPO Commercials — Website Guide</title>
+<style>
+  @page { margin: 2cm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1e293b; line-height: 1.7; max-width: 800px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 4px; }
+  h2 { font-size: 20px; font-weight: 700; color: #1e40af; margin-top: 36px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid #dbeafe; }
+  h3 { font-size: 15px; font-weight: 700; color: #334155; margin-top: 20px; margin-bottom: 8px; }
+  p { margin-bottom: 10px; font-size: 14px; }
+  .subtitle { color: #64748b; font-size: 14px; margin-bottom: 32px; }
+  .step { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; margin-bottom: 12px; }
+  .step-num { display: inline-block; background: #1e40af; color: #fff; width: 24px; height: 24px; border-radius: 50%; text-align: center; font-size: 13px; font-weight: 700; line-height: 24px; margin-right: 10px; }
+  .warning { background: #fef3c7; border: 1px solid #fcd34d; border-radius: 10px; padding: 14px 18px; margin: 16px 0; font-size: 13px; }
+  .warning strong { color: #92400e; }
+  .contact-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 20px 24px; margin: 16px 0; }
+  .contact-box p { margin-bottom: 6px; }
+  .contact-box strong { color: #1e40af; }
+  ul { padding-left: 20px; margin-bottom: 12px; }
+  li { font-size: 14px; margin-bottom: 6px; }
+  code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #0f172a; }
+  .section-icon { font-size: 20px; margin-right: 6px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+  th { background: #f1f5f9; text-align: left; padding: 8px 12px; font-weight: 600; border: 1px solid #e2e8f0; }
+  td { padding: 8px 12px; border: 1px solid #e2e8f0; }
+  .footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 12px; text-align: center; }
+  @media print { body { padding: 0; } h2 { break-after: avoid; } .step { break-inside: avoid; } }
+</style>
+</head>
+<body>
+
+<h1>EPO Commercials</h1>
+<p class="subtitle">Website Management Guide — epocommercials.ie</p>
+
+<!-- ─────────────────────────────────── -->
+<h2>1. Admin Panel — Logging In</h2>
+
+<p>The admin panel lets you manage parts listings and view customer messages.</p>
+
+<div class="step">
+  <span class="step-num">1</span>Go to <code>epocommercials.ie/#admin</code>
+</div>
+<div class="step">
+  <span class="step-num">2</span>Enter your email: <code>info@epocommercials.ie</code>
+</div>
+<div class="step">
+  <span class="step-num">3</span>Enter your password and click <strong>Sign in</strong>
+</div>
+
+<div class="warning">
+  <strong>Important:</strong> Do not share your admin password. If you forget it, contact the developer (see bottom of this document).
+</div>
+
+<!-- ─────────────────────────────────── -->
+<h2>2. Managing Parts</h2>
+
+<p>The <strong>Parts</strong> tab lets you add, edit, and remove parts that appear on the website.</p>
+
+<h3>Adding a new part</h3>
+<div class="step">
+  <span class="step-num">1</span>Fill in <strong>Part name</strong> (e.g. "Volvo FH Air Dryer")
+</div>
+<div class="step">
+  <span class="step-num">2</span>Enter the <strong>Price</strong> in euro
+</div>
+<div class="step">
+  <span class="step-num">3</span>Upload a <strong>Photo</strong> of the part
+</div>
+<div class="step">
+  <span class="step-num">4</span>Click <strong>Add Part</strong> — it will appear on the website immediately
+</div>
+
+<h3>Editing a part</h3>
+<p>Click <strong>Edit</strong> next to any part to change its name or price. Click <strong>Save</strong> when done.</p>
+
+<h3>Removing a part</h3>
+<p>Click <strong>Remove</strong> next to the part. You will be asked to confirm. This cannot be undone.</p>
+
+<h3>Clear all parts</h3>
+<p>Click <strong>Clear all</strong> to remove all parts at once. Use with caution — this cannot be undone.</p>
+
+<!-- ─────────────────────────────────── -->
+<h2>3. Contact Messages</h2>
+
+<p>When a customer fills out the contact form on the website, two things happen:</p>
+<ul>
+  <li>You receive an <strong>email notification</strong> at <code>info@epocommercials.ie</code></li>
+  <li>The message is saved in the <strong>Messages</strong> tab of the admin panel</li>
+</ul>
+
+<h3>Viewing messages</h3>
+<p>Click the <strong>Messages</strong> tab. Unread messages have a <strong>blue dot</strong> and bold name. Click on a message to expand it and see the full text.</p>
+
+<h3>Replying to a customer</h3>
+<p>When you expand a message, you can:</p>
+<ul>
+  <li><strong>Reply by email</strong> — opens your email app with the customer's address</li>
+  <li><strong>Call</strong> — if they left a phone number, click to call directly</li>
+</ul>
+
+<h3>Managing messages</h3>
+<table>
+  <tr><th>Action</th><th>What it does</th></tr>
+  <tr><td><strong>Mark as read/unread</strong></td><td>Toggle read status on a single message</td></tr>
+  <tr><td><strong>Delete</strong></td><td>Remove a single message (cannot be undone)</td></tr>
+  <tr><td><strong>Read all</strong></td><td>Mark all messages as read at once</td></tr>
+  <tr><td><strong>Clear all</strong></td><td>Delete all messages (cannot be undone)</td></tr>
+  <tr><td><strong>Refresh</strong></td><td>Reload messages from the server</td></tr>
+</table>
+
+<!-- ─────────────────────────────────── -->
+<h2>4. Your Website Pages</h2>
+
+<table>
+  <tr><th>Page</th><th>URL</th><th>Description</th></tr>
+  <tr><td>Home</td><td>epocommercials.ie</td><td>Main landing page with all sections</td></tr>
+  <tr><td>Parts</td><td>epocommercials.ie/parts</td><td>Full parts catalogue</td></tr>
+  <tr><td>Contact</td><td>epocommercials.ie/contact</td><td>Contact form</td></tr>
+  <tr><td>Privacy Policy</td><td>epocommercials.ie/privacy</td><td>Privacy policy page</td></tr>
+  <tr><td>Admin Panel</td><td>epocommercials.ie/#admin</td><td>Parts &amp; messages management</td></tr>
+</table>
+
+<!-- ─────────────────────────────────── -->
+<h2>5. Things You Don't Need to Worry About</h2>
+
+<ul>
+  <li><strong>SSL certificate</strong> (https) — automatically managed by Vercel</li>
+  <li><strong>Backups</strong> — database is hosted on Supabase with automatic backups</li>
+  <li><strong>Updates</strong> — the website code is updated by the developer when needed</li>
+  <li><strong>Domain renewal</strong> — your domain <code>epocommercials.ie</code> renews on Feb 19, 2027 via Blacknight</li>
+</ul>
+
+<!-- ─────────────────────────────────── -->
+<h2>6. Common Issues</h2>
+
+<table>
+  <tr><th>Problem</th><th>What to do</th></tr>
+  <tr><td>Can't log in to admin</td><td>Check email/password. If forgotten, contact developer for reset.</td></tr>
+  <tr><td>Part photo not uploading</td><td>Make sure the image is under 5MB. Try JPG or PNG format.</td></tr>
+  <tr><td>Contact form not sending</td><td>Check if the site loads. If the issue persists, contact developer.</td></tr>
+  <tr><td>Website not loading</td><td>Check your internet. If the site is down for everyone, contact developer.</td></tr>
+  <tr><td>Email notifications not arriving</td><td>Check spam/junk folder. If still missing, contact developer.</td></tr>
+</table>
+
+<!-- ─────────────────────────────────── -->
+<h2>7. Contact Developer</h2>
+
+<p>If something goes wrong or you need changes to the website:</p>
+
+<div class="contact-box">
+  <p><strong>Aurel Statnyk</strong></p>
+  <p>Email: <code>aurel.statnyk@gmail.com</code></p>
+  <p>Phone: <code>+373 69 527 043</code></p>
+</div>
+
+<p>When reporting an issue, please include:</p>
+<ul>
+  <li>What you were trying to do</li>
+  <li>What happened instead (screenshot if possible)</li>
+  <li>What device/browser you are using</li>
+</ul>
+
+<!-- ─────────────────────────────────── -->
+<h2>8. Your Accounts</h2>
+
+<table>
+  <tr><th>Service</th><th>What it does</th><th>Login</th></tr>
+  <tr><td><strong>Blacknight</strong></td><td>Domain registration &amp; DNS</td><td>blacknight.com — your Blacknight credentials</td></tr>
+  <tr><td><strong>Vercel</strong></td><td>Website hosting</td><td>vercel.com — your Gmail</td></tr>
+  <tr><td><strong>Supabase</strong></td><td>Database &amp; backend</td><td>supabase.com — your Gmail</td></tr>
+  <tr><td><strong>Resend</strong></td><td>Email delivery</td><td>Managed by developer</td></tr>
+</table>
+
+<div class="warning">
+  <strong>Do not</strong> modify settings in Vercel or Supabase dashboards unless instructed by the developer. Incorrect changes can break the website.
+</div>
+
+<div class="footer">
+  EPO Commercials Website Guide — Prepared March 2026<br>
+  Developer: Aurel Statnyk
+</div>
+
+</body>
+</html>

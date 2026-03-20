@@ -23,6 +23,7 @@ export interface Service {
   description: string;
   icon: "breakdown" | "cvrt" | "diagnostics" | "electrical" | "bus" | "truck" | "alignment";
   highlight?: boolean;
+  redCard?: boolean;
   bullets?: string[];
 }
 
@@ -60,6 +61,14 @@ export const services: Service[] = [
       "Round-the-clock emergency recovery and roadside repair for buses, trucks and trailers. We come to you — day or night.",
     icon: "breakdown",
     highlight: true,
+  },
+  {
+    id: "alignment",
+    title: "Alignment for Buses and HGV",
+    description:
+      "Professional wheel alignment services for buses and heavy goods vehicles. Precision laser alignment to reduce tyre wear, improve fuel efficiency and ensure safe handling.",
+    icon: "alignment",
+    redCard: true,
   },
   {
     id: "cvrt",
@@ -111,13 +120,6 @@ export const services: Service[] = [
       "Fleet servicing contracts",
       "24/7 emergency roadside breakdown repairs",
     ],
-  },
-  {
-    id: "alignment",
-    title: "Alignment for Buses and HGV",
-    description:
-      "Professional wheel alignment services for buses and heavy goods vehicles. Precision laser alignment to reduce tyre wear, improve fuel efficiency and ensure safe handling.",
-    icon: "alignment",
   },
 ];
 

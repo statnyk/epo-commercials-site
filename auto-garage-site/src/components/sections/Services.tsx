@@ -9,7 +9,7 @@ function ServiceCard({ s }: { s: Service }) {
   const [hov, setHov] = useState(false);
   const Icon = svcIconMap[s.icon] ?? IcoTruck;
   const color = svcColorMap[s.icon] ?? T.primary;
-  const isRed = s.highlight;
+  const isRed = s.highlight || s.redCard;
   const borderColor = hov ? (isRed ? T.heroBadgeRed : T.primary) : (isRed ? "rgba(255,107,107,0.5)" : T.border);
   const iconBg = hov ? (isRed ? "rgba(255,107,107,0.25)" : T.primaryLight) : (isRed ? "rgba(255,107,107,0.18)" : T.bg);
   const iconColor = hov ? (isRed ? T.heroBadgeRed : T.primary) : (isRed ? T.heroBadgeRed : color);
