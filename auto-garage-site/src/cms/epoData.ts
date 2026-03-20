@@ -8,6 +8,7 @@ export interface EpoSettings {
   emailParts?: string;
   emailAccounts?: string;
   address: string;
+  addressUrl?: string;
   eircode?: string;
 }
 
@@ -40,11 +41,12 @@ export const epoSettings: EpoSettings = {
   tagline: "Bus & Heavy-Duty Vehicle Repair Specialists",
   phone: "+353 87 721 0448",
   phoneAlt: "+353 87 666 6693",
-  phoneAccounts: "0851788303",
+  phoneAccounts: "+353 85 178 8303",
   email: "info@epocommercials.ie",
   emailParts: "parts@epocommercials.ie",
   emailAccounts: "accounts@epocommercials.ie",
-  address: "Dublin, Ireland",
+  address: "Oldmill Industrial Estate, Co. Kildare",
+  addressUrl: "https://goo.gl/maps/i2Dti5bRZWszmC8GA?g_st=aw",
 };
 
 export const workingHours: WorkingHours[] = [

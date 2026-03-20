@@ -225,7 +225,7 @@ export default function ContactPage() {
 
               {/* Location */}
               <InfoCard icon={<IcoMapPin />} label="Location">
-                <p style={{ color: T.textMain, fontWeight: 600, fontSize: "14px", margin: 0 }}>{epoSettings.address}</p>
+                <p style={{ color: T.textMain, fontWeight: 600, fontSize: "14px", margin: 0 }}>{epoSettings.addressUrl ? <a href={epoSettings.addressUrl} target="_blank" rel="noopener noreferrer" style={{ color: T.textMain, textDecoration: "underline" }}>{epoSettings.address}</a> : epoSettings.address}</p>
               </InfoCard>
 
               {/* Hours */}
