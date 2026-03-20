@@ -53,7 +53,7 @@ export default function Contact() {
               <IcoMapPin />
             </div>
             <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Location</p>
-            <p style={{ color: T.textMain, fontWeight: 600, fontSize: "15px", margin: 0 }}>{epoSettings.address}</p>
+            <p style={{ color: T.textMain, fontWeight: 600, fontSize: "15px", margin: 0 }}>{epoSettings.addressUrl ? <a href={epoSettings.addressUrl} target="_blank" rel="noopener noreferrer" style={{ color: T.textMain, textDecoration: "underline" }}>{epoSettings.address}</a> : epoSettings.address}</p>
           </div>
 
           {/* Hours summary */}
@@ -102,6 +102,24 @@ export default function Contact() {
             </div>
           )}
         </div>
+
+        {/* Mini map */}
+        <a href={epoSettings.addressUrl || "#"} target="_blank" rel="noopener noreferrer" style={{ display: "block", marginTop: "28px", borderRadius: T.radiusMd, overflow: "hidden", border: `1.5px solid ${T.border}`, textDecoration: "none" }}>
+          <iframe
+            title="EPO Commercials location"
+            src="https://maps.google.com/maps?q=53.248172,-6.526338&output=embed"
+            width="100%"
+            height="220"
+            style={{ border: 0, display: "block", pointerEvents: "none" }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+          <div style={{ background: T.bg, padding: "12px 20px", display: "flex", alignItems: "center", gap: "8px" }}>
+            <IcoMapPin />
+            <span style={{ color: T.textMain, fontWeight: 600, fontSize: "14px" }}>{epoSettings.address}</span>
+            <span style={{ color: T.accent, fontSize: "13px", fontWeight: 600, marginLeft: "auto" }}>Open in Google Maps &rarr;</span>
+          </div>
+        </a>
       </div>
     </section>
   );

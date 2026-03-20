@@ -34,7 +34,7 @@ export default function About() {
             ))}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "6px", color: T.textSub, fontSize: "14px" }}>
-            <IcoMapPin /><span>{epoSettings.address}</span>
+            <IcoMapPin />{epoSettings.addressUrl ? <a href={epoSettings.addressUrl} target="_blank" rel="noopener noreferrer" style={{ color: T.textSub, textDecoration: "underline" }}>{epoSettings.address}</a> : <span>{epoSettings.address}</span>}
           </div>
         </div>
 

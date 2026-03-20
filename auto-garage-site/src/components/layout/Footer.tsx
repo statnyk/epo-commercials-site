@@ -18,7 +18,7 @@ export default function Footer() {
               />
             </div>
             <p style={{ color: "rgba(255,255,255,0.6)", fontSize: "13px", lineHeight: 1.7, margin: 0 }}>
-              {epoSettings.tagline}<br />{epoSettings.address}
+              {epoSettings.tagline}<br />{epoSettings.addressUrl ? <a href={epoSettings.addressUrl} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.6)", textDecoration: "underline" }}>{epoSettings.address}</a> : epoSettings.address}
             </p>
           </div>
 
