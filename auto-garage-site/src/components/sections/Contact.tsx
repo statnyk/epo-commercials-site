@@ -113,6 +113,7 @@ export default function Contact() {
             style={{ border: 0, display: "block", pointerEvents: "none" }}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+            sandbox="allow-scripts"
           />
           <div style={{ background: T.bg, padding: "12px 20px", display: "flex", alignItems: "center", gap: "8px" }}>
             <IcoMapPin />
