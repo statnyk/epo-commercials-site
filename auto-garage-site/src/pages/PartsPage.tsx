@@ -2,8 +2,15 @@ import { T, container } from "../theme.ts";
 import Header from "../components/layout/Header.tsx";
 import Footer from "../components/layout/Footer.tsx";
 import Parts from "../components/sections/Parts.tsx";
+import useDocumentMeta from "../hooks/useDocumentMeta.ts";
 
 export default function PartsPage() {
+  useDocumentMeta({
+    title: "Parts for Sale – EPO Commercials",
+    description: "Browse heavy vehicle parts for sale at EPO Commercials. Bus, truck and HGV parts available. Contact us for availability and pricing.",
+    canonical: "https://www.epocommercials.ie/parts",
+  });
+
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: T.fontFamily }}>
       <Header />

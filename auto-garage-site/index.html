@@ -29,23 +29,44 @@
     <meta name="twitter:image" content="https://www.epocommercials.ie/og-image.jpg" />
     <!-- Canonical -->
     <link rel="canonical" href="https://www.epocommercials.ie" />
-    <!-- Favicon -->
+    <!-- Favicon & Manifest -->
     <link rel="icon" type="image/svg+xml" href="/epo_3.svg" />
+    <link rel="apple-touch-icon" href="/epo_3.svg" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#1e40af" />
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": "AutoRepair",
       "name": "EPO Commercials",
       "description": "Bus & heavy-duty vehicle repair specialists in Dublin, Ireland. CVRT preparation, diagnostics, electrical & mechanical repair, 24/7 breakdown assistance.",
       "url": "https://www.epocommercials.ie",
       "telephone": "+353877210448",
       "email": "info@epocommercials.ie",
+      "image": "https://www.epocommercials.ie/og-image.jpg",
+      "logo": "https://www.epocommercials.ie/epo_3.svg",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Dublin",
+        "streetAddress": "Oldmill Industrial Estate",
+        "addressLocality": "Kill",
+        "addressRegion": "Co. Kildare",
         "addressCountry": "IE"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 53.248172,
+        "longitude": -6.526338
+      },
+      "hasMap": "https://goo.gl/maps/i2Dti5bRZWszmC8GA",
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
@@ -61,15 +82,24 @@
         }
       ],
       "serviceType": ["Bus Repair","Truck Repair","CVRT Preparation","Computer Diagnostics","Electrical Repair","24/7 Breakdown Assistance","Alignment for Buses and HGV"],
-      "areaServed": {
-        "@type": "City",
-        "name": "Dublin"
-      }
+      "areaServed": [
+        { "@type": "City", "name": "Dublin" },
+        { "@type": "AdministrativeArea", "name": "Co. Kildare" }
+      ],
+      "priceRange": "$$"
     }
     </script>
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <h1>EPO Commercials – Bus &amp; Heavy-Duty Vehicle Repair Specialists</h1>
+      <p>Dublin-based specialists in bus, truck and heavy-duty vehicle repair. CVRT preparation, full diagnostics, engine &amp; electrical repairs, 24/7 emergency breakdown assistance.</p>
+      <p>Services: Bus Repair, Truck Repair, CVRT Preparation, Computer Diagnostics, Electrical Repair, 24/7 Breakdown Assistance, Alignment for Buses and HGV</p>
+      <p>Address: Oldmill Industrial Estate, Kill, Co. Kildare, Ireland</p>
+      <p>Phone: <a href="tel:+353877210448">087 721 0448</a> | Email: <a href="mailto:info@epocommercials.ie">info@epocommercials.ie</a></p>
+      <p>Hours: Mon-Fri 08:00-18:00, Sat 08:00-14:00</p>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

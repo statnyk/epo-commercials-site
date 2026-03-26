@@ -1,81 +1,91 @@
-# EPO Commercials - Launch TODO
+# EPO Commercials — TODO
 
-## Morning Tasks (2026-03-19)
-
-### Contact Form Setup (finish what we started)
-1. [ ] Run SQL migration in Supabase dashboard (`vjguqdqafsmhfkqdwmua`) — create `contact_messages` table + RLS policies
-   ```sql
-   create table contact_messages (
-     id uuid default gen_random_uuid() primary key,
-     name text not null,
-     email text not null,
-     phone text,
-     message text not null,
-     read boolean default false,
-     created_at timestamptz default now()
-   );
-   alter table contact_messages enable row level security;
-   create policy "Anyone can submit a message" on contact_messages for insert to anon with check (true);
-   create policy "Authenticated users can read messages" on contact_messages for select to authenticated using (true);
-   create policy "Authenticated users can update messages" on contact_messages for update to authenticated using (true);
-   create policy "Authenticated users can delete messages" on contact_messages for delete to authenticated using (true);
-   ```
-2. [ ] Deploy edge function:
-   ```bash
-   cd ~/Documents/Personal/epo-commercials-site/auto-garage-site
-   npx supabase login
-   npx supabase functions deploy send-contact-email --project-ref vjguqdqafsmhfkqdwmua --no-verify-jwt
-   ```
-3. [ ] Set Supabase secrets:
-   ```bash
-   npx supabase secrets set RESEND_API_KEY=your_key NOTIFY_EMAIL=aurel.statnyk@gmail.com --project-ref vjguqdqafsmhfkqdwmua
-   ```
-4. [ ] Test contact form — submit a message, check email arrives, check admin panel Messages tab
-
-### Cleanup wrong project
-5. [ ] Remove `contact_messages` table + edge function from `ewigdchaasqtgtauceva` (wrong project)
+Сайт запущен: https://www.epocommercials.ie/
 
 ---
 
-## Completed
+## P0 — Google индексация (сайт не виден в поиске!)
 
-- [x] Favicon (epo_3.svg)
-- [x] Privacy Policy page + footer link
-- [x] Cookie Consent banner
-- [x] Compress epo-jacket.png (1.2MB → 155KB)
-- [x] .env not tracked in Git
-- [x] robots.txt + sitemap.xml
-- [x] og:image + twitter:card meta tags
-- [x] Schema.org LocalBusiness JSON-LD
-- [x] loading="lazy" on below-fold images
-- [x] aria-label on mobile menu button
-- [x] React Error Boundary
-- [x] Removed unused src/assets/parts/
-- [x] Contact form page (/contact) — code done
-- [x] Admin panel Messages tab — code done
-- [x] Edge function for email notifications — code done
-- [x] "Send us a Message" CTA on home page Contact section
+### Код (готово, нужно задеплоить)
+- [ ] Закоммитить и замержить SEO ветку в main (structured data, meta tags, sitemap lastmod, manifest)
+- [ ] Redeploy на Vercel после мержа
 
-## Still Remaining
+### Google Search Console (нужен Gmail клиента)
+- [ ] Зайти на https://search.google.com/search-console
+- [ ] Добавить property `epocommercials.ie`
+- [ ] Верификация через DNS — добавить TXT запись в Blacknight
+- [ ] Отправить sitemap: `https://www.epocommercials.ie/sitemap.xml`
+- [ ] Запросить индексацию главной страницы через "URL Inspection"
 
-### Blocking
-- [ ] Verify Supabase RLS policies on `parts` table
+### Google Business Profile (критично для локального поиска)
+- [ ] Создать профиль на https://business.google.com
+- [ ] Название: EPO Commercials
+- [ ] Категория: Commercial Vehicle Repair / Truck Repair
+- [ ] Адрес: Oldmill Industrial Estate, Co. Kildare
+- [ ] Телефон: +353 87 721 0448
+- [ ] Сайт: https://www.epocommercials.ie
+- [ ] Часы работы: Пн-Пт 08:00-18:00, Сб 08:00-14:00
+- [ ] Пройти верификацию (открытка или звонок Google)
 
-### Hosting & Domain
-- [ ] Set up Vercel under client's account
-- [ ] Configure DNS at Blacknight → Vercel
-- [ ] Set env vars in Vercel dashboard
-- [ ] Google Search Console + Analytics under client's Gmail
-- [ ] Test production build on mobile
+### Google Analytics
+- [ ] Создать GA4 property под Gmail клиента
+- [ ] Получить Measurement ID (G-XXXXXXXXXX)
+- [ ] Добавить в index.html и задеплоить
 
-### Nice to Have
-- [ ] Google Analytics 4
-- [ ] PWA manifest
+---
+
+## P1 — Supabase миграция на аккаунт клиента
+
+- [ ] Создать Supabase проект под Gmail клиента
+- [ ] Запустить SQL миграции (parts + contact_messages)
+- [ ] Создать storage bucket `parts-images` (public)
+- [ ] Деплой edge function `send-contact-email`
+- [ ] Установить secrets (RESEND_API_KEY, NOTIFY_EMAIL)
+- [ ] Создать auth user для админ панели
+- [ ] Обновить env vars в Vercel → redeploy
+
+---
+
+## P2 — Клиентская работа (допы)
+
+### Визитки
+- [x] Дизайн тёмной визитки (HTML + PDF)
+- [ ] Клиент утвердил финальный вариант
+- [ ] Заказать печать
+
+### Стикеры на окна машин
+- [x] Дизайн стикера (HTML + PDF, 2 варианта)
+- [ ] Клиент утвердил финальный вариант
+- [ ] Заказать печать
+
+---
+
+## P3 — Nice to have
+
 - [ ] Error tracking (Sentry)
-- [ ] Convert team photos to WebP
-- [ ] Skip-to-main-content link
+- [ ] Конвертировать фото в WebP
+- [ ] Google Ads кампания (если клиент захочет)
 
-### Client Handover
-- [ ] Document admin panel usage (parts + messages)
-- [ ] Share Vercel + Supabase dashboard access
-- [ ] Provide DNS instructions for Blacknight
+---
+
+## Завершено
+
+### Сайт
+- [x] Все страницы: Hero, About, Services, WhyChoose, OurCommitment, WorkingHours, Parts, Contact
+- [x] Страницы: /parts, /contact, /privacy, /404
+- [x] Админ панель (parts CRUD, messages, bulk actions)
+- [x] Contact form + edge function email notifications
+- [x] Favicon, Cookie Consent, Privacy Policy
+- [x] SEO: robots.txt, sitemap.xml, OG tags, Twitter Card, canonical
+- [x] SEO: Schema.org AutoRepair JSON-LD (geo, full address)
+- [x] SEO: page-specific meta tags (useDocumentMeta hook)
+- [x] SEO: manifest.json, apple-touch-icon, theme-color
+- [x] Accessibility: skip-to-main, aria-labels, lazy loading
+- [x] Performance: image compression, Error Boundary
+- [x] Google Maps link + mini map
+- [x] Alignment service card
+- [x] Deploy на Vercel, DNS, SSL
+
+### Дизайн
+- [x] Визитка тёмная (дизайн + PDF)
+- [x] Стикеры на окна (дизайн + PDF, 2 варианта)

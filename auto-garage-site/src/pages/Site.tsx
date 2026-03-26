@@ -9,8 +9,15 @@ import OurCommitment from "../components/sections/OurCommitment.tsx";
 import WorkingHours from "../components/sections/WorkingHours.tsx";
 import Parts from "../components/sections/Parts.tsx";
 import Contact from "../components/sections/Contact.tsx";
+import useDocumentMeta from "../hooks/useDocumentMeta.ts";
 
 export default function Site() {
+  useDocumentMeta({
+    title: "EPO Commercials – Bus & Heavy-Duty Vehicle Repair Specialists, Dublin",
+    description: "EPO Commercials is a Dublin-based specialist in bus, truck and heavy-duty vehicle repair and maintenance. CVRT pre-test inspections, full diagnostics, engine and electrical repairs, 24/7 emergency breakdown assistance.",
+    canonical: "https://www.epocommercials.ie",
+  });
+
   return (
     <>
       <Header />
