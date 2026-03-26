@@ -2,7 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|google[a-f0-9]+\\.html$).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
