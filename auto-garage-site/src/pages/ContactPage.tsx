@@ -4,6 +4,7 @@ import { epoSettings, workingHours } from "../cms/epoData.ts";
 import { IcoPhone, IcoMail, IcoMapPin, IcoClock } from "../assets/icons/index.ts";
 import Header from "../components/layout/Header.tsx";
 import Footer from "../components/layout/Footer.tsx";
+import useDocumentMeta from "../hooks/useDocumentMeta.ts";
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
@@ -11,6 +12,12 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
 type Status = "idle" | "sending" | "sent" | "error";
 
 export default function ContactPage() {
+  useDocumentMeta({
+    title: "Contact Us – EPO Commercials",
+    description: "Get in touch with EPO Commercials. 24/7 breakdown assistance, bus and truck repair enquiries. Located at Oldmill Industrial Estate, Co. Kildare.",
+    canonical: "https://www.epocommercials.ie/contact",
+  });
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");

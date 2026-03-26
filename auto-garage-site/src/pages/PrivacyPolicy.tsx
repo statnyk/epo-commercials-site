@@ -1,6 +1,7 @@
 import { T, container } from "../theme.ts";
 import Header from "../components/layout/Header.tsx";
 import Footer from "../components/layout/Footer.tsx";
+import useDocumentMeta from "../hooks/useDocumentMeta.ts";
 
 const S = {
   heading: { color: T.textMain, fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", fontWeight: 700, marginTop: "32px", marginBottom: "12px" } as React.CSSProperties,
@@ -10,6 +11,12 @@ const S = {
 };
 
 export default function PrivacyPolicy() {
+  useDocumentMeta({
+    title: "Privacy Policy – EPO Commercials",
+    description: "Privacy policy for EPO Commercials. How we collect, use and protect your personal data under GDPR.",
+    canonical: "https://www.epocommercials.ie/privacy",
+  });
+
   return (
     <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: T.fontFamily }}>
       <Header />
