@@ -80,27 +80,6 @@ export default function Contact() {
             <a href={`mailto:${epoSettings.email}`} style={{ color: T.accent, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.email}</a>
           </div>
 
-          {/* Parts email */}
-          {epoSettings.emailParts && (
-            <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
-              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent, marginBottom: "16px" }}>
-                <IcoMail />
-              </div>
-              <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Parts Enquiries</p>
-              <a href={`mailto:${epoSettings.emailParts}`} style={{ color: T.accent, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.emailParts}</a>
-            </div>
-          )}
-
-          {/* Accounts email */}
-          {epoSettings.emailAccounts && (
-            <div style={{ background: T.bg, border: `1.5px solid ${T.border}`, borderRadius: T.radiusMd, padding: "28px" }}>
-              <div style={{ width: "44px", height: "44px", borderRadius: T.radius, background: T.primaryLight, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent, marginBottom: "16px" }}>
-                <IcoMail />
-              </div>
-              <p style={{ color: T.textSub, fontSize: "11px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "8px" }}>Accounts</p>
-              <a href={`mailto:${epoSettings.emailAccounts}`} style={{ color: T.accent, fontWeight: 600, fontSize: "14px", textDecoration: "none" }}>{epoSettings.emailAccounts}</a>
-            </div>
-          )}
         </div>
 
         {/* Mini map */}

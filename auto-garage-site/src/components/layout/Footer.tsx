@@ -34,12 +34,6 @@ export default function Footer() {
                 <a href={`tel:${epoSettings.phoneAccounts}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.7)", fontWeight: 600, fontSize: "14px", textDecoration: "none" }}><IcoPhone />{epoSettings.phoneAccounts}</a>
               )}
               <a href={`mailto:${epoSettings.email}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.7)", fontSize: "13px", textDecoration: "none" }}><IcoMail />{epoSettings.email}</a>
-              {epoSettings.emailParts && (
-                <a href={`mailto:${epoSettings.emailParts}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.65)", fontSize: "13px", textDecoration: "none" }}><IcoMail />{epoSettings.emailParts}</a>
-              )}
-              {epoSettings.emailAccounts && (
-                <a href={`mailto:${epoSettings.emailAccounts}`} style={{ display: "flex", alignItems: "center", gap: "6px", color: "rgba(255,255,255,0.65)", fontSize: "13px", textDecoration: "none" }}><IcoMail />{epoSettings.emailAccounts}</a>
-              )}
             </div>
           </div>
 

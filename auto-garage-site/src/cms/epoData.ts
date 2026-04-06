@@ -5,8 +5,6 @@ export interface EpoSettings {
   phoneAlt?: string;
   phoneAccounts?: string;
   email: string;
-  emailParts?: string;
-  emailAccounts?: string;
   address: string;
   addressUrl?: string;
   eircode?: string;
@@ -43,8 +41,6 @@ export const epoSettings: EpoSettings = {
   phoneAlt: "+353 87 666 6693",
   phoneAccounts: "+353 85 178 8303",
   email: "info@epocommercials.ie",
-  emailParts: "parts@epocommercials.ie",
-  emailAccounts: "accounts@epocommercials.ie",
   address: "Oldmill Industrial Estate, Co. Kildare",
   addressUrl: "https://goo.gl/maps/i2Dti5bRZWszmC8GA?g_st=aw",
 };

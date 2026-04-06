@@ -102,8 +102,8 @@ export default function Parts({ limit, showViewMore }: { limit?: number; showVie
             <p style={{ color: T.textMain, fontSize: "15px", fontWeight: 700, margin: "0 0 2px" }}>Can't find what you need?</p>
             <p style={{ color: T.textMain, fontSize: "14px", lineHeight: 1.6, margin: 0 }}>Send a parts enquiry by email and we'll get back to you.</p>
           </div>
-          <a href={`mailto:${epoSettings.emailParts ?? epoSettings.email}`} style={{ display: "inline-flex", alignItems: "center", gap: "7px", border: `2px solid ${T.accent}`, color: T.accent, fontWeight: 700, fontSize: "13px", padding: "10px 20px", borderRadius: T.radius, textDecoration: "none" }}>
-            <IcoMail /> {epoSettings.emailParts ?? epoSettings.email}
+          <a href={`mailto:${epoSettings.email}`} style={{ display: "inline-flex", alignItems: "center", gap: "7px", border: `2px solid ${T.accent}`, color: T.accent, fontWeight: 700, fontSize: "13px", padding: "10px 20px", borderRadius: T.radius, textDecoration: "none" }}>
+            <IcoMail /> {epoSettings.email}
           </a>
         </div>
       </div>
